@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        tools:src="@color/grey_dark"
+        android:id="@+id/img_pager_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/grey_dark"
+        android:visibility="visible"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+</LinearLayout>

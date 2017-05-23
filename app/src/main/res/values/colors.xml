@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#cb0051</color>
+    <color name="colorPrimaryDark">#b70052</color>
+    <color name="colorAccent">#b70052</color>
+    <color name="jelajahDark">#2f313a</color>
+    <color name="primary_color">#3F51B5</color>
+    <color name="dark_primary_color">#303F9F</color>
+    <color name="accent_color">#FF5722</color>
+    <color name="card_background">#efefef</color>
+    <color name="facebook_brand_color">#3B5998</color>
+    <color name="google_plus_brand_color">#dc4e41</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="tabinactive">#fde188</color>
+    <color name="text_like_counter">#2b5a83</color>
+
+    <color name="color_divider_line_gray">#e2e2e2</color>
+    <color name="color_gray_light_content_text">#5d5d5d</color>
+
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="background">#e5e5e5</color>
+    <color name="half_black">#808080</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>
+    <color name="blue_semi_transparent">#805677fc</color>
+    <color name="blue_semi_transparent_pressed">#80738ffe</color>
+
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="btnBackground">#e7e7e7</color>
+
+    <color name="gray">#6B849B</color>
+    <color name="bright_pink">#FF007F</color>
+    <color name="dark_red">#ff860000</color>
+    <color name="red">#FF0000</color>
+    <color name="orange">#FF7F00</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="chartreuse">#7FFF00</color>
+    <color name="green">#00FF00</color>
+    <color name="spring_green">#00FF7F</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="azure">#007FFF</color>
+    <color name="blue">#0000FF</color>
+    <color name="violet">#7F00FF</color>
+    <color name="magenta">#FF00FF</color>
+    <color name="actionbar_bg">#FF0099CC</color>
+    <color name="statusbar_bg">#FF006080</color>
+
+    <color name="gnews_blue">#00BDD6</color>
+    <color name="gnews_blue_transparent">#3300BDD6</color>
+    <color name="gnews_blue_dark">#193346</color>
+    <color name="gnews_blue_dark2">#ffffff</color>
+    <color name="gnews_blue_dark3">#24476b</color>
+    <color name="gnews_blue_hover">#1472d4</color>
+    <color name="gnews_article_bg">#1B364E</color>
+    <color name="gnews_swipe_border">#D1D1D1</color>
+    <color name="gnews_navbar">#b2b2b2</color>
+    <color name="gnews_yellow">#ffcc00</color>
+    <color name="grey_light">#f9f9f9</color>
+    <color name="grey_soft">#f2f2f2</color>
+    <color name="grey">#e2e2e2</color>
+    <color name="grey_dark">#767676</color>
+    <color name="transparent_black">#33000000</color>
+    <color name="transparent_black_footer">#73000000</color>
+    <color name="transparent_black_dark">#aa000000</color>
+    <color name="transparent_white">#33ffffff</color>
+    <color name="transparent_white10">#1affffff</color>
+    <color name="transparent_white95">#F2FFFFFF</color>
+    <color name="transparent_white90">#E6FFFFFF</color>
+    <color name="transparent_white50">#80FFFFFF</color>
+    <color name="transparent_grey">#33e2e2e2</color>
+    <color name="transparent_dark_red">#cc860000</color>
+
+</resources>

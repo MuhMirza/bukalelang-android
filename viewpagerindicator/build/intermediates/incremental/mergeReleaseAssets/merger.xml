@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/mirza/Downloads/BukaLelang/viewpagerindicator/src/main/assets"><file name="crashlytics-build.properties" path="/home/mirza/Downloads/BukaLelang/viewpagerindicator/src/main/assets/crashlytics-build.properties"/></source><source path="/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/home/mirza/Downloads/BukaLelang/viewpagerindicator/src/release/assets"/></dataSet></merger>

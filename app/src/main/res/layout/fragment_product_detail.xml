@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:fitsSystemWindows="true"
+                tools:context=".presentation.ui.auction_detail.AuctionDetailActivity">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    tools:listitem="@layout/pager_item" />
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicator"
+                    android:padding="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/auction_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Judul Lelang"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:padding="15dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <id.clorus.bukalelang.presentation.utils.TextViewExpandableAnimation
+                android:id="@+id/product_description"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:lineSpacingExtra="3sp"
+                android:paddingTop="20dp"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tvea_expandLines="3"
+                app:tvea_textContentColor="@color/black"
+                app:tvea_textContentSize="17sp"
+                app:tvea_textExpand="@string/expand"
+                app:tvea_textShrink="@string/shrink"
+                app:tvea_textStateColor="@color/white"
+                app:paddingEnd="10dp"
+                />
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
