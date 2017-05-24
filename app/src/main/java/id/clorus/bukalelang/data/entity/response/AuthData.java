@@ -33,6 +33,17 @@ public class AuthData {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("basic_token")
+    @Expose
+    private String basicToken;
+
+    public String getBasicToken() {
+        return basicToken;
+    }
+
+    public void setBasicToken(String basicToken) {
+        this.basicToken = basicToken;
+    }
 
     public int getId() {
         return id;

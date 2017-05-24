@@ -1,7 +1,6 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -14,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,17 +82,19 @@ public class ProductDetailFragment extends DefaultFragment implements ViewPager.
         auction.setStartDate(bundle.getString("startDate"));
         auction.setEndDate(bundle.getString("endDate"));
         auction.setSlug(bundle.getString("slug"));
-        auction.setImages(bundle.getString("image"));
+
+        String images = bundle.getString("images");
+        images = images.replaceAll("\\s","");
+        String[] items = images.split(",");
+        listPhotos = Arrays.asList(items);
+        for (String photo : listPhotos){
+            Log.d("photo",photo);
+        }
 
         title.setText(auction.getTitle());
         description.setText(auction.getDescription());
         description.resetState(true);
 
-        listPhotos = new ArrayList<>();
-        listPhotos.add(auction.getImages());
-        listPhotos.add(auction.getImages());
-        listPhotos.add(auction.getImages());
-        listPhotos.add(auction.getImages());
         initGalleryViewPager(listPhotos);
 
         return view;
@@ -175,10 +176,9 @@ public class ProductDetailFragment extends DefaultFragment implements ViewPager.
                 }
             });
 
-
             Picasso.with(mContext)
                     .load(mObjects.get(position))
-                    .error(R.color.grey_dark)
+                    .error(R.color.dark_red)
                     .placeholder(R.color.grey_dark)
                     .into(imageView);
 

@@ -1,11 +1,9 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistoryData;
 import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;
-import id.clorus.bukalelang.presentation.ui.home.AuctionListAdapter;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 
 /**
@@ -72,7 +69,7 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         auction.setStartDate(bundle.getString("startDate"));
         auction.setEndDate(bundle.getString("endDate"));
         auction.setSlug(bundle.getString("slug"));
-        auction.setImages(bundle.getString("image"));
+//        auction.setImages(bundle.getString("image"));
 
         bidHistories = new ArrayList<>();
         initRecyclerView();

@@ -1,8 +1,6 @@
 package id.clorus.bukalelang.presentation.ui.home;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,20 +11,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
-import id.clorus.bukalelang.presentation.config.AppConfig;
-import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
 
 
 /**
@@ -77,13 +69,12 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             e.printStackTrace();
         }
             Picasso.with(mContext)
-                    .load(mDataset.get(position).getImages())
+                    .load(mDataset.get(position).getImages().get(0))
                     .error(R.color.grey_dark)
                     .placeholder(R.color.grey_dark)
                     .into(((DataObjectHolder) holder).cover);
 
-
-        CountDownTimer countDownTimer = new CountDownTimer(9800,100) {
+        CountDownTimer countDownTimer = new CountDownTimer(mDataset.get(holder.getAdapterPosition()).getTimeLeft(),10) {
             @Override
             public void onTick(long millisUntilFinished) {
 

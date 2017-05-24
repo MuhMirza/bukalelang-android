@@ -1,8 +1,8 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,13 +10,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +22,11 @@ import butterknife.OnClick;
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.AddBidStatusData;
+import id.clorus.bukalelang.data.entity.response.TimeLeftData;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.net.RestService;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
+import id.clorus.bukalelang.presentation.ui.home.AuctionListAdapter;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +36,7 @@ import retrofit2.Response;
  * Created by mirza on 23/05/17.
  */
 
-public class AuctionDetailActivity extends DefaultActivity {
+public class AuctionDetailActivity extends DefaultActivity implements AuctionDetailView {
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
@@ -48,6 +48,13 @@ public class AuctionDetailActivity extends DefaultActivity {
 
     Auction auction;
 
+    @BindView(R.id.timeleft)
+    TextView countdownTimerText;
+
+    AuctionDetailPresenter presenter;
+
+    CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,8 @@ public class AuctionDetailActivity extends DefaultActivity {
         setContentView(R.layout.activity_auction_detail);
         ButterKnife.bind(this);
         appPreference = Esperandro.getPreferences(AppPreference.class,this);
+
+        presenter = new AuctionDetailPresenter(this);
 
         Bundle bundle = getIntent().getExtras();
         auction = new Auction();
@@ -66,6 +75,7 @@ public class AuctionDetailActivity extends DefaultActivity {
         auction.setCurrentPrice(bundle.getInt("currentBid"));
         auction.setKelipatanBid(bundle.getInt("kelipatanBid"));
         auction.setWeight(bundle.getInt("weight"));
+        auction.setTimeLeft(bundle.getInt("timeleft"));
         auction.setName(bundle.getString("name"));
         auction.setTitle(bundle.getString("title"));
         auction.setDescription(bundle.getString("description"));
@@ -75,17 +85,53 @@ public class AuctionDetailActivity extends DefaultActivity {
         auction.setStartDate(bundle.getString("startDate"));
         auction.setEndDate(bundle.getString("endDate"));
         auction.setSlug(bundle.getString("slug"));
-        auction.setImages(bundle.getString("image"));
+//        auction.setImages(bundle.getString("images"));
+
+        timer(auction.getTimeLeft());
 
         setupViewPager(viewPager);
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));
-        tabLayout.setSelectedTabIndicatorHeight(0);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#cb0051"));
+        tabLayout.setSelectedTabIndicatorHeight(2);
         tabLayout.setupWithViewPager(viewPager);
         setupTab();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+
+        presenter.getTimeLeft(auction.getId());
+    }
+
+    private void timer(int timeleft){
+
+        countDownTimer = new CountDownTimer(timeleft,10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                long millis = millisUntilFinished;
+
+                long seconds = millis / 1000;
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                long days = hours / 24;
+                String time = days + " Hari, " + hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
+
+
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                countdownTimerText.setText(time);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+
+    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -129,6 +175,13 @@ public class AuctionDetailActivity extends DefaultActivity {
         });
     }
 
+    @Override
+    public void onTimeLeftLoaded(TimeLeftData data) {
+        countDownTimer.cancel();
+        timer(data.getTimeLeft());
+        countDownTimer.start();
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -166,19 +219,27 @@ public class AuctionDetailActivity extends DefaultActivity {
     @OnClick(R.id.btn_bid)
     public void bid(){
 
-        Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken());
-
-        RestService.Factory.getInstance().addNewBid(auction.getId(),100000,appPreference.id(),appPreference.accessToken()).enqueue(new Callback<AddBidStatusData>() {
-            @Override
-            public void onResponse(Call<AddBidStatusData> call, Response<AddBidStatusData> response) {
-                showToast(response.body().getMessage());
-            }
-
-            @Override
-            public void onFailure(Call<AddBidStatusData> call, Throwable t) {
-
-            }
-        });
+        BidMenuBottomSheetFragment menuBottomSheetFragment = new BidMenuBottomSheetFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", auction.getId());
+        bundle.putInt("userId",auction.getUserId());
+        bundle.putInt("bin",auction.getMaxPrice());
+        bundle.putInt("startPrice",auction.getMinPrice());
+        bundle.putInt("currentBid",auction.getCurrentPrice());
+        bundle.putInt("kelipatanBid",auction.getKelipatanBid());
+        bundle.putInt("weight",auction.getWeight());
+        bundle.putString("name", auction.getName());
+        bundle.putString("title",auction.getTitle());
+        bundle.putString("description",auction.getDescription());
+        bundle.putString("categoryName",auction.getCategoryName());
+        bundle.putString("location",auction.getLocation());
+        bundle.putString("productId",auction.getProductId());
+        bundle.putString("startDate",auction.getStartDate());
+        bundle.putString("endDate",auction.getEndDate());
+        bundle.putString("slug",auction.getSlug());
+        bundle.putInt("timeleft",auction.getTimeLeft());
+        menuBottomSheetFragment.setArguments(bundle);
+        menuBottomSheetFragment.show(getSupportFragmentManager(),R.id.bottomsheet);
 
     }
 }

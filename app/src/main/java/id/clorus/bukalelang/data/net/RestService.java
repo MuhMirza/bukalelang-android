@@ -4,8 +4,11 @@ import id.clorus.bukalelang.data.entity.response.AddBidStatusData;
 import id.clorus.bukalelang.data.entity.response.AuthData;
 import id.clorus.bukalelang.data.entity.response.CreateAuctionData;
 import id.clorus.bukalelang.data.entity.response.ItemAuctionData;
+import id.clorus.bukalelang.data.entity.response.TimeLeftData;
+import id.clorus.bukalelang.data.entity.response.UploadImageData;
 import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistoryData;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -13,8 +16,9 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Url;
 
 /**
@@ -30,6 +34,10 @@ public interface RestService {
 
     String ADD_NEW_BID = "bids";
     String CREATE_AUCTION = "auctions";
+
+    String BASE_BUKALAPAK_URL = "https://api.bukalapak.com/v2/";
+    String UPLOAD_IMAGE = "images.json";
+
 
     @GET("")
     Call<AuctionData> getAllAuctions(@Url String url);
@@ -51,6 +59,10 @@ public interface RestService {
     Call<BidHistoryData> getBidsHistory(@Url String url);
     //auctions/:id/bid-history
 
+    @GET("")
+    Call<TimeLeftData> getAuctionTimeLeft(@Url String url);
+    //auctions/id/time-left
+
     @POST(ADD_NEW_BID)
     @FormUrlEncoded
     Call<AddBidStatusData> addNewBid(@Field("auctionId") int auctionId, @Field("nextBid") int bid, @Header("userId") int userid, @Header("token") String token);
@@ -63,8 +75,8 @@ public interface RestService {
     @FormUrlEncoded
     Call<CreateAuctionData> createAuction(@Field("userId") int userId, @Field("bukalapakId") int bukalapakId,
                                           @Field("token") String token, @Field("title") String title,
-                                          @Field("categoryId") int categoryId, @Field("category") String category,
-                                          @Field("new") boolean isNew, @Field("weight") int weight,
+                                          @Field("categoryId") int categoryId,
+                                          @Field("new") String isNew, @Field("weight") int weight,
                                           @Field("description") String description, @Field("min_price") int min_price,
                                           @Field("max_price") int max_price, @Field("kelipatan_bid") int kelipatan_bid,
                                           @Field("imagesId") String imagesId, @Field("end_date") String end_date);
@@ -73,6 +85,12 @@ public interface RestService {
     @FormUrlEncoded
     Call<AuthData> register(@Field("name") String name,@Field("email") String email,
                          @Field("username") String username, @Field("password") String password);
+
+
+    @Multipart
+    @POST(UPLOAD_IMAGE)
+    Call<UploadImageData> uploadImage(@Header("Authorization") String basicToken,
+                                      @Part MultipartBody.Part File);
 
     class Factory {
 
@@ -83,6 +101,24 @@ public interface RestService {
 
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                service = retrofit.create(RestService.class);
+                return service;
+            }
+            else return service;
+        }
+    }
+
+    class FactoryBukalapak {
+
+        private static RestService service;
+        public static RestService getInstance(){
+
+            if (service == null) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_BUKALAPAK_URL).addConverterFactory(GsonConverterFactory.create())
                         .build();
 
                 service = retrofit.create(RestService.class);

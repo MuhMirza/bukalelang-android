@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="3"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="10dp" >
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/btn_bid_1"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_primary_color_border"
+                android:layout_margin="5dp"
+                android:text="Rp.10000"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/btn_bid_2"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_primary_color_border"
+                android:layout_margin="5dp"
+                android:text="Rp.10000"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"/>
+
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/btn_bid_3"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_primary_color_border"
+                android:text="Rp.10000"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/btn_bin"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_primary_color_border"
+                android:text="Rp.10000"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"/>
+
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#74B94E"
+        android:layout_margin="10dp"
+        android:layout_gravity="bottom"
+        android:text="BID "
+        android:textColor="@color/white"/>
+
+</LinearLayout>

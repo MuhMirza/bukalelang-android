@@ -39,6 +39,8 @@
         <activity android:name=".presentation.ui.auction_detail.AuctionDetailActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".presentation.ui.auction_create.CreateAuctionActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -19,9 +19,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_expand_text_view_animation_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,12 +35,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_expand_text_view_animation_toggle"
             android:textColor="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
             android:textSize="14sp"
-            tools:text="Show More" />
+            tools:text="SELENGKAPNYA" />
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
             android:layout_centerVertical="true"

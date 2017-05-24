@@ -1,26 +1,18 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
-import id.clorus.bukalelang.presentation.ui.home.HomeView;
 
 
 /**

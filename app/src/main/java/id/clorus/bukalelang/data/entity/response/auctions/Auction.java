@@ -1,6 +1,7 @@
 
 package id.clorus.bukalelang.data.entity.response.auctions;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -50,10 +51,13 @@ public class Auction {
     private String productId;
     @SerializedName("images")
     @Expose
-    private String images;
+    private List<String> images = null;
     @SerializedName("running")
     @Expose
     private boolean running;
+    @SerializedName("small_images")
+    @Expose
+    private List<String> smallImages = null;
     @SerializedName("categoryName")
     @Expose
     private String categoryName;
@@ -63,6 +67,9 @@ public class Auction {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("time_left")
+    @Expose
+    private int timeLeft;
 
     public int getId() {
         return id;
@@ -176,11 +183,11 @@ public class Auction {
         this.productId = productId;
     }
 
-    public String getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(String images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
@@ -190,6 +197,14 @@ public class Auction {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public List<String> getSmallImages() {
+        return smallImages;
+    }
+
+    public void setSmallImages(List<String> smallImages) {
+        this.smallImages = smallImages;
     }
 
     public String getCategoryName() {
@@ -214,6 +229,14 @@ public class Auction {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 
 }

@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import com.xwray.passwordview.PasswordView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,6 +40,7 @@ public class AuthActivity extends DefaultActivity implements AuthView{
 
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+
 
     private boolean isLogin = true;
 
@@ -114,6 +117,7 @@ public class AuthActivity extends DefaultActivity implements AuthView{
         appPreference.saldo(authData.getSaldo());
         appPreference.email(authData.getEmail());
         appPreference.username(authData.getUsername());
+        appPreference.basicToken(authData.getBasicToken());
         appPreference.loggedIn(true);
 
         finish();
@@ -129,8 +133,11 @@ public class AuthActivity extends DefaultActivity implements AuthView{
         appPreference.email(authData.getEmail());
         appPreference.username(authData.getUsername());
         appPreference.loggedIn(true);
+        appPreference.basicToken(authData.getBasicToken());
 
-        Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken());
+        finish();
+
+        Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken()+"basicToken : "+appPreference.basicToken());
 
     }
 

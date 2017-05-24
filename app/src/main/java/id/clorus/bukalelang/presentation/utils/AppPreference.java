@@ -10,6 +10,8 @@ public interface AppPreference {
     boolean loggedIn(boolean loggedIn);
     String accessToken();
     void accessToken(String accessToken);
+    String basicToken();
+    void basicToken(String basicToken);
     String roles();
     void roles(String roles);
     String username();

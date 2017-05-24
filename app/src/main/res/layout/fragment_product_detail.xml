@@ -77,7 +77,7 @@
                 app:tvea_textContentSize="17sp"
                 app:tvea_textExpand="@string/expand"
                 app:tvea_textShrink="@string/shrink"
-                app:tvea_textStateColor="@color/white"
+                app:tvea_textStateColor="@color/colorPrimary"
                 app:paddingEnd="10dp"
                 />
 

@@ -13,7 +13,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +25,7 @@ import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
+import id.clorus.bukalelang.presentation.ui.auction_create.CreateAuctionActivity;
 import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
 import id.clorus.bukalelang.presentation.ui.auth.AuthActivity;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
@@ -137,6 +137,9 @@ public class HomeActivity extends DefaultActivity
         if (id == R.id.nav_auth){
             Intent intent = new Intent(HomeActivity.this, AuthActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_bikin_lelang){
+            Intent intent = new Intent(HomeActivity.this, CreateAuctionActivity.class);
+            startActivity(intent);
         }
 
         /*
@@ -229,7 +232,14 @@ public class HomeActivity extends DefaultActivity
         bundle.putString("startDate",data.getStartDate());
         bundle.putString("endDate",data.getEndDate());
         bundle.putString("slug",data.getSlug());
-        bundle.putString("image",data.getImages());
+        bundle.putInt("timeleft",data.getTimeLeft());
+
+
+        String images = data.getImages().toString();
+        images = images.substring(1,images.length()-1);
+
+        bundle.putString("images",images);
+        Log.d("images",images);
 
         Intent intent = new Intent(HomeActivity.this, AuctionDetailActivity.class);
         intent.putExtras(bundle);
