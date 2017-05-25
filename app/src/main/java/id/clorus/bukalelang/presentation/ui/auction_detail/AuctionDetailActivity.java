@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
+    @BindView(R.id.btn_bid)
+    Button btnOpenBidMenu;
 
     AppPreference appPreference;
 
@@ -85,7 +89,6 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
         auction.setStartDate(bundle.getString("startDate"));
         auction.setEndDate(bundle.getString("endDate"));
         auction.setSlug(bundle.getString("slug"));
-//        auction.setImages(bundle.getString("images"));
 
         timer(auction.getTimeLeft());
 
@@ -102,7 +105,12 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
         super.onResume();
 
 
-        presenter.getTimeLeft(auction.getId());
+        if ((!auction.isRunning()) || (auction.getCurrentPrice() >= auction.getMaxPrice()) ){
+            countdownTimerText.setText("LELANG TELAH SELESAI");
+            countDownTimer.cancel();
+            btnOpenBidMenu.setText("LELANG INI TELAH SELESAI");
+            btnOpenBidMenu.setClickable(false);
+        } else presenter.getTimeLeft(auction.getId());
     }
 
     private void timer(int timeleft){

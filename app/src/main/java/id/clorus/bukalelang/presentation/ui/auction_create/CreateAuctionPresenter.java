@@ -8,6 +8,7 @@ import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.data.entity.response.CreateAuctionData;
 import id.clorus.bukalelang.data.entity.response.UploadImageData;
 import id.clorus.bukalelang.data.net.RestService;
+import id.clorus.bukalelang.presentation.model.AuctionPhoto;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -64,7 +65,11 @@ public class CreateAuctionPresenter {
         RestService.FactoryBukalapak.getInstance().uploadImage(appPreference.basicToken(),body).enqueue(new Callback<UploadImageData>() {
             @Override
             public void onResponse(Call<UploadImageData> call, Response<UploadImageData> response) {
-                view.onFinishUploadImage(response.body(),path);
+
+                AuctionPhoto data = new AuctionPhoto();
+                data.setId(response.body().getId());
+                data.setPath(path);
+                view.onFinishUploadImage(data);
             }
 
             @Override

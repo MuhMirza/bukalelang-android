@@ -86,11 +86,19 @@ public class BidMenuBottomSheetFragment extends BottomSheetFragment {
             auction.setSlug(bundle.getString("slug"));
         }
 
-        btnBid1.setText("Rp."+String.valueOf(auction.getCurrentPrice()+auction.getKelipatanBid()));
-        btnBid2.setText("Rp."+String.valueOf(auction.getCurrentPrice()+(2*auction.getKelipatanBid())));
-        btnBid3.setText("Rp."+String.valueOf(auction.getCurrentPrice()+(3*auction.getKelipatanBid())));
-        btnBin.setText("Rp."+String.valueOf(auction.getMaxPrice()));
+        if (auction.getCurrentPrice()+auction.getKelipatanBid() < auction.getMaxPrice()){
+            btnBid1.setText("Rp."+String.valueOf(auction.getCurrentPrice()+auction.getKelipatanBid()));
+        } else btnBid1.setText("Rp."+String.valueOf(auction.getMaxPrice()));
 
+        if ((auction.getCurrentPrice()+(2*auction.getKelipatanBid())) < auction.getMaxPrice()){
+            btnBid2.setText("Rp."+String.valueOf(auction.getCurrentPrice()+(2*auction.getKelipatanBid())));
+        } else btnBid2.setText("Rp."+String.valueOf(auction.getMaxPrice()));
+
+        if ((auction.getCurrentPrice()+(3*auction.getKelipatanBid())) < auction.getMaxPrice()){
+            btnBid3.setText("Rp."+String.valueOf(auction.getCurrentPrice()+(3*auction.getKelipatanBid())));
+        } else btnBid3.setText("Rp."+String.valueOf(auction.getMaxPrice()));
+
+        btnBin.setText("Rp."+String.valueOf(auction.getMaxPrice()));
 
         return view;
     }
@@ -103,6 +111,7 @@ public class BidMenuBottomSheetFragment extends BottomSheetFragment {
         btnBid1.setTextColor(white);
         nominalBid = auction.getCurrentPrice()+auction.getKelipatanBid();
         btnSubmit.setText("BID Rp."+String.valueOf(nominalBid));
+        if (nominalBid > auction.getMaxPrice()) btnSubmit.setText("BIN Rp."+String.valueOf(auction.getMaxPrice()));
         btnBid2.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_edittext_primary_color_border));
         btnBid2.setTextColor(colorActive);
         btnBid3.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_edittext_primary_color_border));
@@ -119,6 +128,7 @@ public class BidMenuBottomSheetFragment extends BottomSheetFragment {
         btnBid2.setTextColor(white);
         nominalBid = auction.getCurrentPrice()+(2*auction.getKelipatanBid());
         btnSubmit.setText("BID Rp."+String.valueOf(nominalBid));
+        if (nominalBid > auction.getMaxPrice()) btnSubmit.setText("BIN Rp."+String.valueOf(auction.getMaxPrice()));
         btnBid1.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_edittext_primary_color_border));
         btnBid1.setTextColor(colorActive);
         btnBid3.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_edittext_primary_color_border));
@@ -136,6 +146,7 @@ public class BidMenuBottomSheetFragment extends BottomSheetFragment {
         btnBid3.setTextColor(white);
         nominalBid = auction.getCurrentPrice()+(3*auction.getKelipatanBid());
         btnSubmit.setText("BID Rp."+String.valueOf(nominalBid));
+        if (nominalBid > auction.getMaxPrice()) btnSubmit.setText("BIN Rp."+String.valueOf(auction.getMaxPrice()));
         btnBid1.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_edittext_primary_color_border));
         btnBid1.setTextColor(colorActive);
         btnBid2.setBackground(getActivity().getResources().getDrawable(R.drawable.bg_edittext_primary_color_border));
@@ -160,12 +171,12 @@ public class BidMenuBottomSheetFragment extends BottomSheetFragment {
         btnBid2.setTextColor(colorActive);
     }
 
-//    @OnClick(R.id.btn_bid)
+    @OnClick(R.id.btn_submit)
     public void bid(){
 
         Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken());
 
-        RestService.Factory.getInstance().addNewBid(auction.getId(),100000,appPreference.id(),appPreference.accessToken()).enqueue(new Callback<AddBidStatusData>() {
+        RestService.Factory.getInstance().addNewBid(auction.getId(),nominalBid,appPreference.id(),appPreference.accessToken()).enqueue(new Callback<AddBidStatusData>() {
             @Override
             public void onResponse(Call<AddBidStatusData> call, Response<AddBidStatusData> response) {
 //                showToast(response.body().getMessage());

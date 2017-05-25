@@ -77,6 +77,7 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                swipeRefresh.setRefreshing(true);
                 adapter.clear();
                 presenter.bidHistoryRequest(String.valueOf(auction.getId()));
             }
@@ -87,6 +88,14 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        swipeRefresh.setRefreshing(true);
+//        adapter.clear();
+//        presenter.bidHistoryRequest(String.valueOf(auction.getId()));
+
+    }
 
     public void initRecyclerView(){
 

@@ -1,203 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomsheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
 
-    <android.support.v7.widget.Toolbar
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimary"
-        android:contentInsetEnd="0dp"
-        android:contentInsetLeft="0dp"
-        android:contentInsetRight="0dp"
-        android:contentInsetStart="0dp"
-        android:minHeight="?attr/actionBarSize"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_collapseMode="pin"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
+            android:layout_height="60dp"
+            android:background="@color/colorPrimary"
+            android:contentInsetEnd="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetStart="0dp"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <FrameLayout
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:src="@drawable/ic_vect_btn_back"
-                    android:tint="@color/white" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:paddingLeft="8dp"
-                android:paddingRight="5dp"
-                android:text="Bikin Lelang Baru"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_publish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="PUBLISH"
-                android:background="@color/colorPrimary"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/btn_upload_img"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@color/grey_dark"/>
-
-            <EditText
-                android:id="@+id/input_title"
-                android:hint="Judul"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:hint="Kategori"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Deskripsi"
-                android:textSize="17sp"/>
-
-            <EditText
-                android:id="@+id/input_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:minLines="3"
-                android:padding="5dp"
-                android:gravity="top"
-                android:textColorHint="@color/grey"
-                android:hint="Tulis deskripsi barang"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_edittext_primary_color_border"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kondisi Barang"
-                android:textSize="17sp"/>
-            <RadioGroup
-                android:id="@+id/rg_product_condition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
 
-                <RadioButton
-                    android:id="@+id/rb_new"
+                <FrameLayout
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/ic_vect_btn_back"
+                        android:tint="@color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/title"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Baru"
-                    android:buttonTint="@color/colorPrimary"
-                    android:textSize="12dp"/>
-
-                <RadioButton
-                    android:id="@+id/rb_second"
-                    android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="5dp"
+                    android:text="Bikin Lelang Baru"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_publish"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:textSize="12dp"
-                    android:buttonTint="@color/colorPrimary"
-                    android:text="Bekas"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="PUBLISH"
+                    android:background="@color/colorPrimary"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
 
-            </RadioGroup>
+            </LinearLayout>
 
+        </android.support.v7.widget.Toolbar>
 
-            <EditText
-                android:id="@+id/input_weight"
-                android:hint="Berat (gr)"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-
-            <EditText
-                android:id="@+id/input_open_bid_price"
-                android:hint="Harga Dasar Lelang"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/input_bin_price"
-                android:hint="Harga Beli langsung"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Waktu Selesai Lelang"
-                android:textSize="16sp"
-                android:paddingTop="10dp"/>
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/date_time_picker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Kamis, 22 Desember 2017 00:00:00"
-                android:textSize="17sp"
-                android:textColor="@color/black"
-                android:paddingTop="10dp"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-        </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+                <Button
+                    android:id="@+id/btn_upload_img"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="UPLOAD PHOTO"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/input_title"
+                    android:hint="Judul"
+                    android:textColorHint="@color/grey_dark"
+                    android:textColor="@color/grey_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/black"
+                    android:text="Kategori"/>
+
+                <TextView
+                    android:id="@+id/btn_select_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kategori Name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Deskripsi"
+                    android:textColor="@color/grey_dark"
+                    android:textSize="17sp"/>
+
+                <EditText
+                    android:id="@+id/input_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:minLines="3"
+                    android:padding="5dp"
+                    android:gravity="top"
+                    android:textColorHint="@color/grey"
+                    android:hint="Tulis deskripsi barang"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_edittext_primary_color_border"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_dark"
+                    android:text="Kondisi Barang"
+                    android:textSize="17sp"/>
+                <RadioGroup
+                    android:id="@+id/rg_product_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:id="@+id/rb_new"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Baru"
+                        android:textColor="@color/black"
+                        android:buttonTint="@color/colorPrimary"
+                        android:textSize="12dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_second"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Bekas"/>
+
+                </RadioGroup>
+
+
+                <EditText
+                    android:id="@+id/input_weight"
+                    android:hint="Berat (gr)"
+                    android:inputType="number"
+
+                    android:textColorHint="@color/grey_dark"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <EditText
+                    android:id="@+id/input_open_bid_price"
+                    android:hint="Harga Dasar Lelang"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/input_bin_price"
+                    android:hint="Harga Beli langsung"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Waktu Selesai Lelang"
+                    android:textSize="16sp"
+                    android:paddingTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/date_time_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kamis, 22 Desember 2017 00:00:00"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:paddingTop="10dp"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </LinearLayout>
 
 
 

@@ -8,6 +8,9 @@ public interface AppPreference {
 
     boolean loggedIn();
     boolean loggedIn(boolean loggedIn);
+    @Default(ofBoolean = true)
+    boolean firstTime();
+    boolean firstTime(boolean firstTime);
     String accessToken();
     void accessToken(String accessToken);
     String basicToken();

@@ -11,7 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,10 +37,17 @@ import butterknife.OnClick;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.CreateAuctionData;
 import id.clorus.bukalelang.data.entity.response.UploadImageData;
+import id.clorus.bukalelang.data.entity.response.categories.Category;
 import id.clorus.bukalelang.presentation.config.AppConfig;
+import id.clorus.bukalelang.presentation.model.AuctionPhoto;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
+import id.clorus.bukalelang.presentation.ui.select_category.CategoryListAdapter;
+import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryActivity;
+import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryFragment;
 import id.clorus.bukalelang.presentation.utils.ImageCaptureUtil;
 import id.clorus.bukalelang.presentation.utils.ImageCompressorUtil;
+
+import static android.R.attr.category;
 
 /**
  * Created by mirza on 24/05/17.
@@ -51,17 +61,50 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     @BindView(R.id.date_time_picker)
     TextView dateTimePicker;
 
-    @BindView(R.id.btn_upload_img)
-    ImageView imgView;
+
+    @BindView(R.id.input_title)
+    TextView inputTitle;
+
+    @BindView(R.id.input_description)
+    TextView inputDescription;
+
+    @BindView(R.id.input_weight)
+    TextView inputWeight;
+
+    @BindView(R.id.input_open_bid_price)
+    TextView inputPriceOpenBid;
+
+    @BindView(R.id.input_bin_price)
+    TextView inputPriceBin;
+
+
+    @BindView(R.id.btn_select_category)
+    TextView selectCategory;
+
+
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+    private AuctionPhotoAdapter adapter;
+    private LinearLayoutManager layoutManager;
+    ArrayList<AuctionPhoto> photos;
 
     static String date;
     static String time;
 
     CreateAuctionPresenter presenter;
     private int PERMISSION_CODE = 111;
+    private int SELECT_CATEGORY_CODE = 212;
+
+    String arrayPhotos;
+    String dateTime;
+    boolean isNew;
 
     List<String> imageIdList;
     List<String> imagePathList;
+
+    Category categorySelected;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +115,18 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         presenter = new CreateAuctionPresenter(this,this);
         imageIdList = new ArrayList<>();
         imagePathList = new ArrayList<>();
+        categorySelected = new Category();
+
+        photos = new ArrayList<>();
+        initRecyclerView();
 
         int status = productCondition.getCheckedRadioButtonId();
         switch (status){
             case R.id.rb_new :
+                isNew = true;
                 break;
             case R.id.rb_second :
+                isNew = false;
                 break;
         }
     }
@@ -96,6 +145,7 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         time = "T"+hourString+":"+minuteString+":"+secondString+"+07:00";
 
         dateTimePicker.setText(date+time);
+        dateTime = date+time;
     }
 
     @OnClick(R.id.date_time_picker)
@@ -125,6 +175,13 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         tpd.show(getFragmentManager(),"");
     }
 
+    @OnClick(R.id.btn_select_category)
+    public void selectCategory(){
+        Intent intent = new Intent(CreateAuctionActivity.this, SelectCategoryActivity.class);
+        startActivityForResult(intent, SELECT_CATEGORY_CODE);
+
+    }
+
     @OnClick(R.id.btn_upload_img)
     public void uploadPhoto(){
 
@@ -136,6 +193,37 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
             e.printStackTrace();
         }
 
+
+    }
+
+    @OnClick(R.id.btn_publish)
+    public void publish(){
+
+        Log.d("title",inputTitle.getText().toString());
+        Log.d("photos", arrayPhotos);
+        Log.d("description",inputDescription.getText().toString());
+        Log.d("kondisi isNew? ",String.valueOf(isNew));
+        Log.d("berat",inputWeight.getText().toString());
+        Log.d("price open bid",inputPriceOpenBid.getText().toString());
+        Log.d("price bin",inputPriceBin.getText().toString());
+        Log.d("tanggal selesai",dateTime);
+
+//        presenter.createAuctionRequest();
+
+
+
+    }
+
+    public void initRecyclerView(){
+
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemViewCacheSize(10);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        adapter = new AuctionPhotoAdapter(this, photos,this);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -199,6 +287,24 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
                 }
             });
 
+        }
+
+        if (requestCode == SELECT_CATEGORY_CODE) {
+
+            try {
+
+                String categoryName = data.getStringExtra("categoryName");
+                int categoryId = data.getIntExtra("categoryId",0);
+                String categoryUrl = data.getStringExtra("categoryUrl");
+
+                categorySelected.setName(categoryName);
+                categorySelected.setId(categoryId);
+                categorySelected.setUrl(categoryUrl);
+                selectCategory.setText(categorySelected.getName()+ String.valueOf(categorySelected.getId()));
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
 
@@ -225,19 +331,25 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
 
     @Override
     public void onFinishUploadImage(UploadImageData data,String imagePath) {
-        showToast(String.valueOf(data.getId())+data.getMessage());
-        imageIdList.add(String.valueOf(data.getId()));
-        imagePathList.add(imagePath);
 
-        Uri uri=Uri.fromFile(new File(imagePath));
-
-        Log.d("path",imagePath);
-        Picasso.with(this)
-                .load(uri)
-                .error(R.color.red)
-                .placeholder(R.color.grey_dark)
-                .into(imgView);
     }
+
+    @Override
+    public void onFinishUploadImage(AuctionPhoto data) {
+
+        adapter.addItem(data,photos.size());
+        StringBuilder str = new StringBuilder();
+        for (AuctionPhoto photo : photos){
+            str.append(photo.getId()).append(",");
+        }
+
+        arrayPhotos = str.toString();
+        arrayPhotos = arrayPhotos.substring(0,arrayPhotos.length()-1);
+        Log.d("photos",str.toString());
+
+
+    }
+
 
     @Override
     public void onCreateAuctionComplete(CreateAuctionData data) {
