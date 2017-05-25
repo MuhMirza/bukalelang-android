@@ -28,93 +28,16 @@ public class SplashScreenActivity extends DefaultActivity {
 
     AppPreference appPreference;
 
-    private ArrayList<Category> categories;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         appPreference = Esperandro.getPreferences(AppPreference.class, this);
 
-        getCategories();
-
-        if (appPreference.firstTime()){
-
-        } else {
-            SplashThread splashThread = new SplashThread();
-            splashThread.start();
-        }
+        SplashThread splashThread = new SplashThread();
+        splashThread.start();
 
 
-
-    }
-
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getAssets().open("categories.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-
-    }
-
-    private void getCategories(){
-
-        new AsyncTask<Void,Void,Void>(){
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Type listType = new TypeToken<ArrayList<Category>>(){}.getType();
-                categories = new GsonBuilder().create().fromJson(loadJSONFromAsset(), listType);
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-
-                for (int a= 0; a< categories.size();a++){
-                    Category category1 = categories.get(a);
-                    Log.d("category name level 1",category1.getName());
-
-                    if (categories.get(a).getChildren().size() >0){
-                        for (int b= 0; b< categories.get(a).getChildren().size();b++){
-                            Category category2 = categories.get(a).getChildren().get(b);
-                            Log.d("category name level 2",category2.getName());
-
-                            if (categories.get(a).getChildren().get(b).getChildren().size() >0){
-                                for (int c= 0; c< categories.get(a).getChildren().get(b).getChildren().size();c++){
-                                    Category category3 = categories.get(a).getChildren().get(b).getChildren().get(c);
-                                    Log.d("category name level 3",category3.getName());
-
-                                }
-                            }
-
-
-                        }
-                    }
-
-
-                }
-
-//                appPreference.firstTime(false);
-//                SplashThread splashThread = new SplashThread();
-//                splashThread.start();
-
-            }
-        }.execute();
     }
 
 

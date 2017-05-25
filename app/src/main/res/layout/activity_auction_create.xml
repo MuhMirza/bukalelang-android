@@ -112,7 +112,7 @@
 
                 <EditText
                     android:id="@+id/input_title"
-                    android:hint="Judul"
+                    android:hint="JUDUL"
                     android:textColorHint="@color/grey_dark"
                     android:textColor="@color/grey_dark"
                     android:layout_width="match_parent"
@@ -208,6 +208,15 @@
                 <EditText
                     android:id="@+id/input_open_bid_price"
                     android:hint="Harga Dasar Lelang"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/input_kelipatan_bid"
+                    android:hint="Kelipatan Bid"
                     android:inputType="number"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey_dark"

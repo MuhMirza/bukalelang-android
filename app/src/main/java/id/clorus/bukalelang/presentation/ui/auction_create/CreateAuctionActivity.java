@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -40,7 +41,9 @@ import id.clorus.bukalelang.data.entity.response.UploadImageData;
 import id.clorus.bukalelang.data.entity.response.categories.Category;
 import id.clorus.bukalelang.presentation.config.AppConfig;
 import id.clorus.bukalelang.presentation.model.AuctionPhoto;
+import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
+import id.clorus.bukalelang.presentation.ui.home.HomeActivity;
 import id.clorus.bukalelang.presentation.ui.select_category.CategoryListAdapter;
 import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryActivity;
 import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryFragment;
@@ -77,6 +80,9 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     @BindView(R.id.input_bin_price)
     TextView inputPriceBin;
 
+    @BindView(R.id.input_kelipatan_bid)
+    EditText inputKelipatanBid;
+
 
     @BindView(R.id.btn_select_category)
     TextView selectCategory;
@@ -98,7 +104,7 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
 
     String arrayPhotos;
     String dateTime;
-    boolean isNew;
+    String isNew;
 
     List<String> imageIdList;
     List<String> imagePathList;
@@ -123,10 +129,10 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         int status = productCondition.getCheckedRadioButtonId();
         switch (status){
             case R.id.rb_new :
-                isNew = true;
+                isNew = "true";
                 break;
             case R.id.rb_second :
-                isNew = false;
+                isNew = "false";
                 break;
         }
     }
@@ -199,24 +205,31 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     @OnClick(R.id.btn_publish)
     public void publish(){
 
+        /*
         Log.d("title",inputTitle.getText().toString());
         Log.d("photos", arrayPhotos);
         Log.d("description",inputDescription.getText().toString());
-        Log.d("kondisi isNew? ",String.valueOf(isNew));
+        Log.d("kondisi isNew? ",isNew);
         Log.d("berat",inputWeight.getText().toString());
         Log.d("price open bid",inputPriceOpenBid.getText().toString());
         Log.d("price bin",inputPriceBin.getText().toString());
-        Log.d("tanggal selesai",dateTime);
+        Log.d("tanggal selesai",dateTime);*/
+
+        if (inputDescription.getText().toString().length() > 30){
+
+            presenter.createAuctionRequest(inputTitle.getText().toString().toUpperCase(),categorySelected.getId(),isNew,Integer.parseInt(inputWeight.getText().toString()),
+                    inputDescription.getText().toString(),Integer.parseInt(inputPriceOpenBid.getText().toString()),Integer.parseInt(inputPriceBin.getText().toString()),Integer.parseInt(inputKelipatanBid.getText().toString()),arrayPhotos,dateTime);
+
+        } else showToast("Tolong berikan deskripsi lebih dari 30 kata");
 
 //        presenter.createAuctionRequest();
-
 
 
     }
 
     public void initRecyclerView(){
 
-        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true);
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemViewCacheSize(10);
         recyclerView.setDrawingCacheEnabled(true);
@@ -344,15 +357,53 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         }
 
         arrayPhotos = str.toString();
-        arrayPhotos = arrayPhotos.substring(0,arrayPhotos.length()-1);
+//        arrayPhotos = arrayPhotos.substring(0,arrayPhotos.length()-1);
         Log.d("photos",str.toString());
-
 
     }
 
 
     @Override
     public void onCreateAuctionComplete(CreateAuctionData data) {
+
+        showToast(data.getMessage());
+
+        Log.d("message",data.getMessage());
+
+        Intent intent = new Intent(CreateAuctionActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+
+        /*
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", data.getId());
+        bundle.putInt("userId",data.getUserId());
+        bundle.putInt("bin",data.getMaxPrice());
+        bundle.putInt("startPrice",data.getMinPrice());
+//        bundle.putInt("currentBid",data.getCurrentPrice());
+        bundle.putInt("kelipatanBid",data.getKelipatanBid());
+        bundle.putInt("weight",data.getWeight());
+//        bundle.putString("name", data.getName());
+        bundle.putString("title",data.getTitle());
+        bundle.putString("description",data.getDescription());
+//        bundle.putString("categoryName",data.getCategoryName());
+        bundle.putString("location",data.getLocation());
+        bundle.putString("productId",data.getProductId());
+        bundle.putString("startDate",data.getStartDate());
+        bundle.putString("endDate",data.getEndDate());
+        bundle.putString("slug",data.getSlug());
+//        bundle.putInt("timeleft",data.getTimeLeft());
+
+
+        String images = data.getImages().toString();
+        images = images.substring(1,images.length()-1);
+
+        bundle.putString("images",images);
+        Log.d("images",images);
+
+        Intent intent = new Intent(CreateAuctionActivity.this, AuctionDetailActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);*/
 
     }
 

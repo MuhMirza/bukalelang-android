@@ -1,6 +1,7 @@
 
 package id.clorus.bukalelang.data.entity.response;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -20,13 +21,13 @@ public class CreateAuctionData {
     private String slug;
     @SerializedName("images")
     @Expose
-    private String images;
+    private List<String> images = null;
+    @SerializedName("small_images")
+    @Expose
+    private List<String> smallImages = null;
     @SerializedName("categoryId")
     @Expose
     private int categoryId;
-    @SerializedName("category")
-    @Expose
-    private String category;
     @SerializedName("new")
     @Expose
     private boolean _new;
@@ -63,6 +64,9 @@ public class CreateAuctionData {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("category")
+    @Expose
+    private String category;
 
     public int getId() {
         return id;
@@ -96,12 +100,20 @@ public class CreateAuctionData {
         this.slug = slug;
     }
 
-    public String getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(String images) {
+    public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public List<String> getSmallImages() {
+        return smallImages;
+    }
+
+    public void setSmallImages(List<String> smallImages) {
+        this.smallImages = smallImages;
     }
 
     public int getCategoryId() {
@@ -110,14 +122,6 @@ public class CreateAuctionData {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public boolean isNew() {
@@ -214,6 +218,14 @@ public class CreateAuctionData {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
 }

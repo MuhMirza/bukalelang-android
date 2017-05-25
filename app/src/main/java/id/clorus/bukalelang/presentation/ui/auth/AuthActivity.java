@@ -137,6 +137,8 @@ public class AuthActivity extends DefaultActivity implements AuthView{
 
         finish();
 
+        showToast(authData.getMessage());
+
         Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken()+"basicToken : "+appPreference.basicToken());
 
     }

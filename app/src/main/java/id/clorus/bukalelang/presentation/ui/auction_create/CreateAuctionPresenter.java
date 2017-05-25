@@ -1,6 +1,7 @@
 package id.clorus.bukalelang.presentation.ui.auction_create;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 
@@ -37,16 +38,31 @@ public class CreateAuctionPresenter {
     public void createAuctionRequest(String title,int categoryId,String isNew,int weight,String description,
                                      int minPrice,int maxPrice,int kelipatanBid,String imageId,String endDate){
 
+        Log.d("title",title);
+        Log.d("photos", imageId);
+        Log.d("description",description);
+        Log.d("kondisi isNew? ",isNew);
+        Log.d("berat",String.valueOf(weight));
+        Log.d("price open bid",String.valueOf(minPrice));
+        Log.d("price bin",String.valueOf(maxPrice));
+        Log.d("tanggal selesai",endDate);
+        Log.d("categoryId",String.valueOf(categoryId));
+        Log.d("kelipatan bid",String.valueOf(kelipatanBid));
+        Log.d("userId",String.valueOf(appPreference.id()));
+        Log.d("blId",String.valueOf(appPreference.bukalapakId()));
+        Log.d("token",appPreference.accessToken());
+
         RestService.Factory.getInstance().createAuction(appPreference.id(),appPreference.bukalapakId(),appPreference.accessToken(),
                 title,categoryId,isNew,weight,description,minPrice,maxPrice,kelipatanBid,imageId,endDate).enqueue(new Callback<CreateAuctionData>() {
             @Override
             public void onResponse(Call<CreateAuctionData> call, Response<CreateAuctionData> response) {
+                Log.d("create","processed");
                 view.onCreateAuctionComplete(response.body());
             }
 
             @Override
             public void onFailure(Call<CreateAuctionData> call, Throwable t) {
-
+                Log.d("create","failed");
             }
         });
 
@@ -66,10 +82,15 @@ public class CreateAuctionPresenter {
             @Override
             public void onResponse(Call<UploadImageData> call, Response<UploadImageData> response) {
 
-                AuctionPhoto data = new AuctionPhoto();
-                data.setId(response.body().getId());
-                data.setPath(path);
-                view.onFinishUploadImage(data);
+                try {
+                    AuctionPhoto data = new AuctionPhoto();
+                    data.setId(response.body().getId());
+                    data.setPath(path);
+                    view.onFinishUploadImage(data);
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
