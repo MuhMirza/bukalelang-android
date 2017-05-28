@@ -81,6 +81,8 @@ public class CreateAuctionPresenter {
         RestService.FactoryBukalapak.getInstance().uploadImage(appPreference.basicToken(),body).enqueue(new Callback<UploadImageData>() {
             @Override
             public void onResponse(Call<UploadImageData> call, Response<UploadImageData> response) {
+                Log.d("request","processed");
+//                Log.d("request message",response.body().getMessage());
 
                 try {
                     AuctionPhoto data = new AuctionPhoto();
@@ -95,7 +97,7 @@ public class CreateAuctionPresenter {
 
             @Override
             public void onFailure(Call<UploadImageData> call, Throwable t) {
-
+                Log.d("request","failed");
             }
         });
 

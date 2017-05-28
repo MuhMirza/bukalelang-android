@@ -153,8 +153,10 @@ public class SelectCategoryFragment extends DefaultFragment implements CategoryS
         if (category.getChildren().size() >0){
             categoryName.setText(category.getName());
             //ketika masih ada child
-            categories.clear();
+
+            adapter.clear();
             categories = category.getChildren();
+//            adapter.notifyDataSetChanged();
             adapter.addAll(categories);
         } else {
             //ketika child sudah habis

@@ -1,13 +1,16 @@
 package id.clorus.bukalelang.data.net;
 
 import id.clorus.bukalelang.data.entity.response.AddBidStatusData;
-import id.clorus.bukalelang.data.entity.response.AuthData;
 import id.clorus.bukalelang.data.entity.response.CreateAuctionData;
+import id.clorus.bukalelang.data.entity.response.CurrentBidData;
 import id.clorus.bukalelang.data.entity.response.ItemAuctionData;
 import id.clorus.bukalelang.data.entity.response.TimeLeftData;
 import id.clorus.bukalelang.data.entity.response.UploadImageData;
+import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
+import id.clorus.bukalelang.data.entity.response.auth.AuthData;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistoryData;
+import id.clorus.bukalelang.data.entity.response.joined_auction.JoinedAuctionData;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -27,7 +30,7 @@ import retrofit2.http.Url;
 
 public interface RestService {
 
-    String BASE_URL = "https://api.bukalelang.id/";
+    String BASE_URL = "http://studio.tealinuxos.org:3000/";
 
     String REGISTER_URL = "auth/register";
     String LOGIN_URL = "auth/login";
@@ -44,11 +47,19 @@ public interface RestService {
     //auctions?limit=5&&page=1
 
     @GET("")
+    Call<JoinedAuctionData> getJoinedAuctions(@Url String url);
+    //users/:id/auctions-joined
+
+    @GET("auctions?limit=5&&page=1")
+    Call<AuctionData> getAuctions();
+    //auctions?limit=5&&page=1
+
+    @GET("")
     Call<ItemAuctionData> getItemAuctionById(@Url String idAuction, @Header("userId") String userid,@Header("token") String token);
     //auctions/id
 
     @GET("")
-    Call<ItemAuctionData> getItemAuctionBySlug(@Url String idAuction);
+    Call<Auction> getItemAuctionBySlug(@Url String idAuction);
     //auctions/slug/:slug
 
     @GET("")
@@ -58,6 +69,10 @@ public interface RestService {
     @GET("")
     Call<BidHistoryData> getBidsHistory(@Url String url);
     //auctions/:id/bid-history
+
+    @GET("")
+    Call<CurrentBidData> getCurrentBid(@Url String url);
+    //auctions/id/current-price
 
     @GET("")
     Call<TimeLeftData> getAuctionTimeLeft(@Url String url);
@@ -79,7 +94,7 @@ public interface RestService {
                                           @Field("new") String isNew, @Field("weight") int weight,
                                           @Field("description") String description, @Field("min_price") int min_price,
                                           @Field("max_price") int max_price, @Field("kelipatan_bid") int kelipatan_bid,
-                                          @Field("imagesId") String imagesId, @Field("end_date") String end_date);
+                                          @Field("imagesId") String imagesId, @Field("endDateFromAndroid") String end_date);
 
     @POST(REGISTER_URL)
     @FormUrlEncoded

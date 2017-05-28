@@ -6,28 +6,10 @@
             android:id="@+id/nav_bikin_lelang"
             android:title="Bikin Lelang" />
         <item
-            android:id="@+id/nav_lapak_saya"
-            android:title="Lapak Saya" />
-        <item
-            android:id="@+id/nav_ikut_lelang"
-            android:title="Ikut Lelang" />
-        <item
-            android:id="@+id/nav_menang_lelang"
-            android:title="Menang Lelang" />
+            android:id="@+id/nav_profile"
+            android:title="Profil"
+            />
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_about"
-                android:title="About" />
-            <item
-                android:id="@+id/nav_logout"
-                android:title="Logout" />
-            <item
-                android:id="@+id/nav_auth"
-                android:title="Login" />
-        </menu>
-    </item>
 
 </menu>

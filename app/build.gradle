@@ -86,6 +86,11 @@ dependencies {
     compile 'de.devland.esperandro:esperandro-gson-addon:2.2.0'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile ('io.socket:socket.io-client:0.8.3') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.android.support:multidex:1.0.1'
@@ -100,5 +105,6 @@ dependencies {
     apt 'de.devland.esperandro:esperandro:2.2.0'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.wdullaer:materialdatetimepicker:3.2.1'
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 
 }

@@ -15,6 +15,17 @@ public class BidHistory {
     @SerializedName("bidding_time")
     @Expose
     private String biddingTime;
+    @SerializedName("avatarUrl")
+    @Expose
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public String getNameOfBidder() {
         return nameOfBidder;

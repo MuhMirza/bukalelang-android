@@ -1,6 +1,7 @@
 
-package id.clorus.bukalelang.data.entity.response;
+package id.clorus.bukalelang.data.entity.response.auth;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,28 +22,48 @@ public class AuthData {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("confirmed")
+    @Expose
+    private boolean confirmed;
     @SerializedName("saldo")
     @Expose
     private int saldo;
     @SerializedName("token")
     @Expose
     private String token;
+    @SerializedName("user_addresses")
+    @Expose
+    private List<UserAddress> userAddresses = null;
+    @SerializedName("basic_token")
+    @Expose
+    private String basicToken;
     @SerializedName("success")
     @Expose
     private boolean success;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("basic_token")
+    @SerializedName("status")
     @Expose
-    private String basicToken;
+    private String status;
+    @SerializedName("avatarUrl")
+    @Expose
+    private String avatarUrl;
 
-    public String getBasicToken() {
-        return basicToken;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setBasicToken(String basicToken) {
-        this.basicToken = basicToken;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -85,6 +106,14 @@ public class AuthData {
         this.email = email;
     }
 
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
     public int getSaldo() {
         return saldo;
     }
@@ -99,6 +128,22 @@ public class AuthData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<UserAddress> getUserAddresses() {
+        return userAddresses;
+    }
+
+    public void setUserAddresses(List<UserAddress> userAddresses) {
+        this.userAddresses = userAddresses;
+    }
+
+    public String getBasicToken() {
+        return basicToken;
+    }
+
+    public void setBasicToken(String basicToken) {
+        this.basicToken = basicToken;
     }
 
     public boolean isSuccess() {

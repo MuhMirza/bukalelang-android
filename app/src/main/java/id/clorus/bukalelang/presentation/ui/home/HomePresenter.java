@@ -1,6 +1,7 @@
 package id.clorus.bukalelang.presentation.ui.home;
 
 import android.content.Context;
+import android.util.Log;
 
 import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
 import id.clorus.bukalelang.data.net.RestService;
@@ -25,13 +26,16 @@ public class HomePresenter {
 
     public void getAllAuctions(int page, int limit){
         RestService.Factory.getInstance().getAllAuctions("auctions?limit="+limit+"&&page="+page).enqueue(new Callback<AuctionData>() {
+//          RestService.Factory.getInstance().getAuctions().enqueue(new Callback<AuctionData>() {
             @Override
             public void onResponse(Call<AuctionData> call, Response<AuctionData> response) {
+                Log.d("request","processed");
                 view.onAllAuctionLoaded(response.body());
             }
 
             @Override
             public void onFailure(Call<AuctionData> call, Throwable t) {
+                Log.d("request fail",t.getMessage());
 
             }
         });

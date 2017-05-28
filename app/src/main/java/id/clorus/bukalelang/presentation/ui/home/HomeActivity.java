@@ -16,20 +16,43 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
+import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
+import id.clorus.bukalelang.presentation.ui.Bukalelang;
 import id.clorus.bukalelang.presentation.ui.auction_create.CreateAuctionActivity;
 import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
+import id.clorus.bukalelang.presentation.ui.auction_detail.BidHistoryAdapter;
 import id.clorus.bukalelang.presentation.ui.auth.AuthActivity;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
+import id.clorus.bukalelang.presentation.ui.profile.ProfileActivity;
+import id.clorus.bukalelang.presentation.ui.search_auction.SearchAuctionActivity;
+import id.clorus.bukalelang.presentation.ui.splash.SplashScreenActivity;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
+import io.socket.client.Manager;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+import io.socket.engineio.client.Transport;
 
 public class HomeActivity extends DefaultActivity
         implements NavigationView.OnNavigationItemSelectedListener,HomeView {
@@ -37,6 +60,14 @@ public class HomeActivity extends DefaultActivity
     AppPreference appPreference;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    RoundedImageView avatar;
+    TextView username;
+    TextView email;
+    Button btnAuth;
+
+    @BindView(R.id.nav_footer_auth)
+    TextView authBtn;
 
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
@@ -48,6 +79,9 @@ public class HomeActivity extends DefaultActivity
 
     static int page;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
+    NavigationView navigationView;
+
+    Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +98,6 @@ public class HomeActivity extends DefaultActivity
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                auctions.clear();
                 adapter.clear();
                 presenter.getAllAuctions(1,5);
             }
@@ -89,34 +122,254 @@ public class HomeActivity extends DefaultActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        avatar = (RoundedImageView) navigationView.getHeaderView(0).findViewById(R.id.user_photo);
+        email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.email);
+        username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
+        btnAuth = (Button) navigationView.getHeaderView(0).findViewById(R.id.btn_auth);
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId",String.valueOf(appPreference.id()));
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+            }
+        });
+
+        if (appPreference.loggedIn()){
+
+            authBtn.setText("LogOut");
+//            email.setText(appPreference.email());
+            Locale localeID = new Locale("in", "ID");
+            NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+            email.setText("saldo : "+formatRupiah.format(appPreference.saldo()));
+            username.setText(appPreference.username());
+
+            navigationView.getMenu().findItem(R.id.nav_bikin_lelang).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_profile).setVisible(true);
+
+
+
+            btnAuth.setVisibility(View.GONE);
+            username.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+            avatar.setVisibility(View.VISIBLE);
+            btnAuth.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(HomeActivity.this,AuthActivity.class);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            authBtn.setText("Login");
+
+            navigationView.getMenu().findItem(R.id.nav_bikin_lelang).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_profile).setVisible(false);
+
+            btnAuth.setVisibility(View.VISIBLE);
+            username.setVisibility(View.GONE);
+            email.setVisibility(View.GONE);
+            avatar.setVisibility(View.GONE);
+
+        }
+
+        initWs();
 
 
         presenter.getAllAuctions(1,10);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    @OnClick(R.id.nav_footer_auth)
+    public void logout(){
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        if (appPreference.loggedIn()){
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        appPreference.loggedIn(false);
+        Intent intent = new Intent(HomeActivity.this, SplashScreenActivity.class);
+        startActivity(intent);
+        finish();
+
+        } else {
+            Intent intent = new Intent(HomeActivity.this, AuthActivity.class);
+            startActivity(intent);
+            finish();
         }
 
-        return super.onOptionsItemSelected(item);
+
     }
+
+    @OnClick(R.id.btn_search)
+    public void search(){
+        Intent intent = new Intent(HomeActivity.this, SearchAuctionActivity.class);
+        startActivity(intent);
+    }
+    public void initWs(){
+
+        Bukalelang bukalelang = (Bukalelang) getApplication();
+        socket = bukalelang.getSocket();
+
+        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                try {
+//                    Log.d("message",args[0].toString());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).on("new-auction", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                try {
+                    JSONObject obj = (JSONObject)args[0];
+                    Log.d("auction",obj.toString());
+
+                    newAuction(obj);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).on("chat message", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                try {
+//                    Log.d("message",args[0].toString());
+                    output(args[0].toString());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+            }
+        }).on(Manager.EVENT_TRANSPORT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Transport transport = (Transport) args[0];
+                transport.on(Transport.EVENT_ERROR, new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        Exception e = (Exception) args[0];
+                        Log.e("TEST", "transport error " + e);
+                        e.printStackTrace();
+                        e.getCause().printStackTrace();
+                    }
+                });
+            }
+        });
+        socket.connect();
+    }
+
+    private void newAuction(final JSONObject obj) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Auction auction = new Auction();
+                try {
+                    auction.setTitle(obj.getString("title"));
+                    auction.setDescription(obj.getString("description"));
+//                  auction.setName(obj.getString("name"));
+                    auction.setId(obj.getInt("id"));
+                    auction.setTimeLeft(obj.getInt("time_left"));
+                    auction.setCategoryName(obj.getString("categoryName"));
+                    auction.setEndDate(obj.getString("end_date"));
+                    auction.setCurrentPrice(obj.getInt("current_price"));
+                    auction.setMaxPrice(obj.getInt("max_price"));
+                    auction.setKelipatanBid(obj.getInt("kelipatan_bid"));
+                    auction.setWeight(obj.getInt("weight"));
+                    auction.setUserId(obj.getInt("userId"));
+                    auction.setIsRunning(obj.getInt("isRunning"));
+                    auction.setSlug(obj.getString("slug"));
+                    auction.setLocation(obj.getString("location"));
+                    auction.setProductId(obj.getString("productId"));
+                    auction.setBidderCount(obj.getInt("bidderCount"));
+                    auction.setAvatarUrl(obj.getString("avatarUrl"));
+
+                    List<String> images = new ArrayList<String>();
+                    JSONArray arrayImages =  obj.getJSONArray("images");
+                    for (int i = 0;i < arrayImages.length();i++){
+                        images.add(arrayImages.get(i).toString());
+                    }
+                    auction.setImages(images);
+
+                    showToast("Ada Lelang baru!");
+
+                    adapter.addItem(auction,0);
+                    layoutManager.smoothScrollToPosition(recyclerView,null,0);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    private void output(final String txt) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast(txt);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (appPreference.loggedIn()){
+            authBtn.setText("LogOut");
+            navigationView.getMenu().findItem(R.id.nav_bikin_lelang).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_profile).setVisible(true);
+
+            btnAuth.setVisibility(View.GONE);
+            username.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+            avatar.setVisibility(View.VISIBLE);
+            btnAuth.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(HomeActivity.this,AuthActivity.class);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            authBtn.setText("Login");
+            navigationView.getMenu().findItem(R.id.nav_bikin_lelang).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_profile).setVisible(false);
+
+            btnAuth.setVisibility(View.VISIBLE);
+            username.setVisibility(View.GONE);
+            email.setVisibility(View.GONE);
+            avatar.setVisibility(View.GONE);
+
+        }
+
+        try {
+            Picasso.with(this)
+                    .load(appPreference.photoUrl())
+                    .error(R.drawable.avatar_default)
+                    .placeholder(R.drawable.avatar_default)
+                    .into(avatar);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -124,28 +377,21 @@ public class HomeActivity extends DefaultActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_auth){
-            Intent intent = new Intent(HomeActivity.this, AuthActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_bikin_lelang){
-            Intent intent = new Intent(HomeActivity.this, CreateAuctionActivity.class);
+        if (id == R.id.nav_bikin_lelang){
+            if (!appPreference.isHaveAddress()){
+                showToast("Kamu harus melengkapi alamat terlebih dulu via aplikasi bukalapak");
+            } else {
+                Intent intent = new Intent(HomeActivity.this, CreateAuctionActivity.class);
+                startActivity(intent);
+            }
+
+        } else if (id == R.id.nav_profile){
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("userId",String.valueOf(appPreference.id()));
+            intent.putExtras(bundle);
             startActivity(intent);
         }
-
-        /*
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -191,6 +437,7 @@ public class HomeActivity extends DefaultActivity
 
     @Override
     public void onAllAuctionLoaded(AuctionData data) {
+        Log.d("message",data.getMessage());
 //        auctions.addAll(data.getAuctions());
 
         for (int i = 0;i<data.getAuctions().size();i++){
@@ -241,7 +488,8 @@ public class HomeActivity extends DefaultActivity
         bundle.putString("endDate",data.getEndDate());
         bundle.putString("slug",data.getSlug());
         bundle.putInt("timeleft",data.getTimeLeft());
-
+        bundle.putInt("bidderCount",data.getBidderCount());
+        bundle.putString("avatarUrl",data.getAvatarUrl());
 
         String images = data.getImages().toString();
         images = images.substring(1,images.length()-1);

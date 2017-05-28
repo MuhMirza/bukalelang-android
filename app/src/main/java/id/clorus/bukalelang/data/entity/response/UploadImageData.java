@@ -14,7 +14,7 @@ public class UploadImageData {
     private int id;
     @SerializedName("message")
     @Expose
-    private Object message;
+    private String message;
 
     public String getStatus() {
         return status;
@@ -32,11 +32,11 @@ public class UploadImageData {
         this.id = id;
     }
 
-    public Object getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Object message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

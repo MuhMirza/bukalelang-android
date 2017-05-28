@@ -57,9 +57,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         mDataset.size();
 
-        try {
 
+        try {
             ((DataObjectHolder) holder).categoryName.setText(mDataset.get(holder.getAdapterPosition()).getName());
+//            if (mDataset.get(holder.getAdapterPosition()).getChildren().size() > 0){
+//                ((DataObjectHolder) holder).detailImg.setVisibility(View.VISIBLE);
+//            } ((DataObjectHolder) holder).detailImg.setVisibility(View.GONE);
 
         } catch (Exception e){
             e.printStackTrace();
@@ -108,10 +111,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static class DataObjectHolder extends RecyclerView.ViewHolder  {
 
         TextView categoryName;
+        ImageView detailImg;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             this.categoryName = (TextView) itemView.findViewById(R.id.category_name);
+            this.detailImg = (ImageView) itemView.findViewById(R.id.detail_img);
 
             Log.i(LOG_TAG, "Adding Listener");
         }

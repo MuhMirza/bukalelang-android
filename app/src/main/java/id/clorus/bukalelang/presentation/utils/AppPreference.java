@@ -11,6 +11,8 @@ public interface AppPreference {
     @Default(ofBoolean = true)
     boolean firstTime();
     boolean firstTime(boolean firstTime);
+    boolean isHaveAddress();
+    boolean isHaveAddress(boolean isHaveAddress);
     String accessToken();
     void accessToken(String accessToken);
     String basicToken();
@@ -28,6 +30,7 @@ public interface AppPreference {
     float progress();
     String email();
     void email(String email);
+
     String photoUrl();
     void photoUrl(String avatarUrl);
     int id();

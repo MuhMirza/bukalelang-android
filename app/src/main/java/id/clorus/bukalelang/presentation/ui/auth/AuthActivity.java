@@ -1,23 +1,23 @@
 package id.clorus.bukalelang.presentation.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.xwray.passwordview.PasswordView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.AuthData;
+import id.clorus.bukalelang.data.entity.response.auth.AuthData;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
+import id.clorus.bukalelang.presentation.ui.home.HomeActivity;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 
 /**
@@ -41,6 +41,11 @@ public class AuthActivity extends DefaultActivity implements AuthView{
     @BindView(R.id.btn_submit)
     Button btnSubmit;
 
+    @BindView(R.id.title)
+    TextView title;
+
+    @BindView(R.id.auth_switch)
+    TextView Tvswitch;
 
     private boolean isLogin = true;
 
@@ -61,6 +66,7 @@ public class AuthActivity extends DefaultActivity implements AuthView{
             loginMode();
         } else registerMode();
 
+//        login();
 
     }
 
@@ -68,6 +74,9 @@ public class AuthActivity extends DefaultActivity implements AuthView{
 
         isLogin = true;
 
+        Tvswitch.setText("Sudah punya akun? login");
+
+        title.setText("Login Akun");
         inputName.setVisibility(View.GONE);
         inputEmail.setVisibility(View.GONE);
         btnSubmit.setText("LOGIN");
@@ -84,6 +93,8 @@ public class AuthActivity extends DefaultActivity implements AuthView{
     private void registerMode(){
 
         isLogin = false;
+        title.setText("Daftar Akun");
+        Tvswitch.setText("Belum punya akun? Daftar");
 
         inputName.setVisibility(View.VISIBLE);
         inputEmail.setVisibility(View.VISIBLE);
@@ -111,36 +122,83 @@ public class AuthActivity extends DefaultActivity implements AuthView{
 
     @Override
     public void onRegisterCompleted(AuthData authData) {
-        appPreference.accessToken(authData.getToken());
-        appPreference.bukalapakId(authData.getBukalapakId());
-        appPreference.id(authData.getId());
-        appPreference.saldo(authData.getSaldo());
-        appPreference.email(authData.getEmail());
-        appPreference.username(authData.getUsername());
-        appPreference.basicToken(authData.getBasicToken());
-        appPreference.loggedIn(true);
 
-        finish();
+        if (authData.getStatus().equals("OK")){
+            appPreference.accessToken(authData.getToken());
+            appPreference.bukalapakId(authData.getBukalapakId());
+            appPreference.id(authData.getId());
+            appPreference.saldo(authData.getSaldo());
+            appPreference.email(authData.getEmail());
+            appPreference.username(authData.getUsername());
+            appPreference.loggedIn(true);
+            appPreference.basicToken(authData.getBasicToken());
+            appPreference.photoUrl(authData.getAvatarUrl());
+
+            if (authData.getUserAddresses().size() >0){
+                appPreference.isHaveAddress(true);
+            } else appPreference.isHaveAddress(false);
+
+            Intent intent = new Intent(AuthActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+        showToast(authData.getMessage());
+
+        Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken()+"basicToken : "+appPreference.basicToken());
     }
 
     @Override
     public void onLoginCompleted(AuthData authData) {
 
-        appPreference.accessToken(authData.getToken());
-        appPreference.bukalapakId(authData.getBukalapakId());
-        appPreference.id(authData.getId());
-        appPreference.saldo(authData.getSaldo());
-        appPreference.email(authData.getEmail());
-        appPreference.username(authData.getUsername());
-        appPreference.loggedIn(true);
-        appPreference.basicToken(authData.getBasicToken());
+        if (authData.getStatus().equals("OK")){
+            appPreference.accessToken(authData.getToken());
+            appPreference.bukalapakId(authData.getBukalapakId());
+            appPreference.id(authData.getId());
+            appPreference.saldo(authData.getSaldo());
+            appPreference.email(authData.getEmail());
+            appPreference.username(authData.getUsername());
+            appPreference.loggedIn(true);
+            appPreference.basicToken(authData.getBasicToken());
+            appPreference.photoUrl(authData.getAvatarUrl());
+            if (authData.getUserAddresses().size() >0){
+                appPreference.isHaveAddress(true);
+            } else appPreference.isHaveAddress(false);
 
-        finish();
+            Intent intent = new Intent(AuthActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
 
         showToast(authData.getMessage());
 
         Log.d("userId",appPreference.id()+"token :"+appPreference.accessToken()+"basicToken : "+appPreference.basicToken());
 
+    }
+
+    public void login(){
+        appPreference.accessToken("QBDCP5bP5wKTdRrJePJ");
+        appPreference.bukalapakId(29971746);
+        appPreference.id(4);
+        appPreference.basicToken("Basic Mjk5NzE3NDY6UUJEQ1A1YlA1d0tUZFJySmVQSg==");
+        appPreference.loggedIn(true);
+
+        Log.d("token",appPreference.accessToken());
+        Log.d("blId",String.valueOf(appPreference.bukalapakId()));
+        Log.d("id",String.valueOf(appPreference.id()));
+
+    }
+
+    @OnClick(R.id.btn_back)
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        Intent intent = new Intent(AuthActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

@@ -14,28 +14,28 @@ public class AddBidStatusData {
     private boolean success;
     @SerializedName("id")
     @Expose
-    private Object id;
+    private int id;
     @SerializedName("auctionId")
     @Expose
-    private Object auctionId;
+    private int auctionId;
     @SerializedName("username")
     @Expose
-    private Object username;
+    private String username;
     @SerializedName("name")
     @Expose
-    private Object name;
+    private String name;
     @SerializedName("bidding_time")
     @Expose
-    private Object biddingTime;
+    private String biddingTime;
     @SerializedName("categoryId")
     @Expose
-    private Object categoryId;
+    private int categoryId;
     @SerializedName("current_price")
     @Expose
-    private Object currentPrice;
+    private int currentPrice;
     @SerializedName("minimum_next_bidding")
     @Expose
-    private Object minimumNextBidding;
+    private int minimumNextBidding;
 
     public String getMessage() {
         return message;
@@ -57,64 +57,63 @@ public class AddBidStatusData {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Object getAuctionId() {
+    public int getAuctionId() {
         return auctionId;
     }
 
-    public void setAuctionId(Object auctionId) {
+    public void setAuctionId(int auctionId) {
         this.auctionId = auctionId;
     }
 
-    public Object getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(Object username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public Object getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Object name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Object getBiddingTime() {
+    public String getBiddingTime() {
         return biddingTime;
     }
 
-    public void setBiddingTime(Object biddingTime) {
+    public void setBiddingTime(String biddingTime) {
         this.biddingTime = biddingTime;
     }
 
-    public Object getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Object categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public Object getCurrentPrice() {
+    public int getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(Object currentPrice) {
+    public void setCurrentPrice(int currentPrice) {
         this.currentPrice = currentPrice;
     }
 
-    public Object getMinimumNextBidding() {
+    public int getMinimumNextBidding() {
         return minimumNextBidding;
     }
 
-    public void setMinimumNextBidding(Object minimumNextBidding) {
+    public void setMinimumNextBidding(int minimumNextBidding) {
         this.minimumNextBidding = minimumNextBidding;
     }
-
 }

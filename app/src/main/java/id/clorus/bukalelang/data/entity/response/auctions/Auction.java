@@ -52,6 +52,9 @@ public class Auction {
     @SerializedName("images")
     @Expose
     private List<String> images = null;
+    @SerializedName("isRunning")
+    @Expose
+    private int isRunning;
     @SerializedName("running")
     @Expose
     private boolean running;
@@ -67,9 +70,48 @@ public class Auction {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("avatarUrl")
+    @Expose
+    private String avatarUrl;
     @SerializedName("time_left")
     @Expose
     private int timeLeft;
+    @SerializedName("bidderCount")
+    @Expose
+    private int bidderCount;
+    private String imageString;
+
+    public boolean is_new() {
+        return _new;
+    }
+
+    public void set_new(boolean _new) {
+        this._new = _new;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public int getBidderCount() {
+        return bidderCount;
+    }
+
+    public void setBidderCount(int bidderCount) {
+        this.bidderCount = bidderCount;
+    }
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public void setImageString(String imageString) {
+        this.imageString = imageString;
+    }
 
     public int getId() {
         return id;
@@ -189,6 +231,14 @@ public class Auction {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public int getIsRunning() {
+        return isRunning;
+    }
+
+    public void setIsRunning(int isRunning) {
+        this.isRunning = isRunning;
     }
 
     public boolean isRunning() {

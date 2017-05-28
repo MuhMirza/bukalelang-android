@@ -80,6 +80,11 @@ public class ImageCaptureUtil {
         switch (requestCode) {
             case AppConfig.SELECT_PHOTO_CAMERA_REQUEST_CODE:
                 bitmap = (Bitmap) data.getExtras().get("data");
+                if (bitmap != null) {
+                    int width = 512;
+                    int height = (int) (bitmap.getHeight() * ((float) width / bitmap.getWidth()));
+                    bitmap = BitmapUtil.scaleBitmap(bitmap, width, height);
+                }
                 break;
             case AppConfig.SELECT_PHOTO_GALLERY_REQUEST_CODE:
                 Uri selectedImage = data.getData();

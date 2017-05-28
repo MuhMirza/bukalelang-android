@@ -1,45 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:layout_height="71dp"
+    android:background="@color/white">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/avatar"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:scaleType="centerCrop"
-        android:src="@color/colorPrimary"
-        app:riv_corner_radius="50dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="10dp"
+        android:orientation="horizontal">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/avatar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
+            android:src="@color/grey_dark"
+            app:riv_corner_radius="50dp" />
 
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textColor="@color/black"
-        android:layout_gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:textSize="18sp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/bid_nominal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rp.10.000"
-        android:paddingRight="10dp"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:layout_gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:textSize="20sp"
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:paddingLeft="15dp"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/bid_time"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="00:00:00"
+                android:textColor="@color/black"
+                android:paddingLeft="15dp"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/bid_nominal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp.10.000"
+            android:paddingRight="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textSize="20sp"
+            />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginLeft="70dp"
         />
+
 
 
 

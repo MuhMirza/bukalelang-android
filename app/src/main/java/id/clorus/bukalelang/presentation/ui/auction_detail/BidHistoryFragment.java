@@ -1,13 +1,20 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -18,8 +25,20 @@ import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistoryData;
+import id.clorus.bukalelang.presentation.ui.Bukalelang;
 import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
+import io.socket.client.IO;
+import io.socket.client.Manager;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+import io.socket.engineio.client.Transport;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okio.ByteString;
 
 /**
  * Created by mirza on 23/05/17.
@@ -32,6 +51,9 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.container)
+    LinearLayout container;
+
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
 
@@ -43,6 +65,11 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
 
     Auction auction;
 
+
+    Socket socket;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bid_history, container, false);
@@ -50,7 +77,7 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         appPreference = Esperandro.getPreferences(AppPreference.class, getActivity());
         presenter = new BidHistoryPresenter(this,getActivity());
 
-        Bundle bundle = getActivity().getIntent().getExtras();
+        Bundle bundle = this.getArguments();
         auction = new Auction();
 
         auction.setId(bundle.getInt("id"));
@@ -69,7 +96,6 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         auction.setStartDate(bundle.getString("startDate"));
         auction.setEndDate(bundle.getString("endDate"));
         auction.setSlug(bundle.getString("slug"));
-//        auction.setImages(bundle.getString("image"));
 
         bidHistories = new ArrayList<>();
         initRecyclerView();
@@ -84,18 +110,123 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         });
 
         presenter.bidHistoryRequest(String.valueOf(auction.getId()));
+        initWs();
+
+        if ((auction.getTimeLeft() <= 0) || (auction.getCurrentPrice() >= auction.getMaxPrice()) ){
+            container.setPadding(0,0,0,0);
+        }
 
         return view;
+    }
+
+    public void initWs(){
+
+        Bukalelang bukalelang = (Bukalelang) getActivity().getApplication();
+        socket = bukalelang.getSocket();
+
+        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+//                JSONObject obj = (JSONObject)args[0];
+//                showToast(obj.toString());
+
+                try {
+                    Log.d("message",args[0].toString());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).on("auction-"+auction.getId(), new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                try {
+//                    output("Ada Bid Baru!!");
+                    JSONObject obj = (JSONObject)args[0];
+                    Log.d("message",obj.toString());
+
+                    newBidAdded(obj);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).on("chat message", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                try {
+                    Log.d("message",args[0].toString());
+                    output(args[0].toString());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+            }
+        }).on(Manager.EVENT_TRANSPORT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Transport transport = (Transport) args[0];
+                transport.on(Transport.EVENT_ERROR, new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        Exception e = (Exception) args[0];
+                        Log.e("TEST", "transport error " + e);
+                        e.printStackTrace();
+                        e.getCause().printStackTrace();
+                    }
+                });
+            }
+        });
+        socket.connect();
+    }
+
+
+    private void output(final String txt) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast(txt);
+            }
+        });
+    }
+
+    private void newBidAdded(final JSONObject obj) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                BidHistory newBid = new BidHistory();
+                try {
+                    newBid.setNameOfBidder(obj.getString("name"));
+                    newBid.setBidNominal(obj.getInt("current_price"));
+                    newBid.setBiddingTime(obj.getString("bidding_time"));
+
+                    showToast("Ada bid baru!");
+
+                    ((AuctionDetailActivity) getActivity()).setCurrentBid(newBid.getBidNominal());
+
+                    adapter.addItem(newBid,0);
+//                    layoutManager.scrollToPosition(0);
+//                    layoutManager.smoothScrollToPosition(recyclerView, null, 0);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        swipeRefresh.setRefreshing(true);
-//        adapter.clear();
-//        presenter.bidHistoryRequest(String.valueOf(auction.getId()));
+
 
     }
+
 
     public void initRecyclerView(){
 

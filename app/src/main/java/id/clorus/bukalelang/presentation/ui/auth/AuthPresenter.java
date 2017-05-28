@@ -2,7 +2,7 @@ package id.clorus.bukalelang.presentation.ui.auth;
 
 import android.content.Context;
 
-import id.clorus.bukalelang.data.entity.response.AuthData;
+import id.clorus.bukalelang.data.entity.response.auth.AuthData;
 import id.clorus.bukalelang.data.net.RestService;
 import retrofit2.Call;
 import retrofit2.Callback;

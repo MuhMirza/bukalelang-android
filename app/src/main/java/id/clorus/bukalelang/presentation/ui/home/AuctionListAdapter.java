@@ -1,6 +1,8 @@
 package id.clorus.bukalelang.presentation.ui.home;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,11 +16,15 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
+import id.clorus.bukalelang.presentation.utils.AppPreference;
 
 
 /**
@@ -27,6 +33,7 @@ import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static String LOG_TAG = "ProductListAdapter";
     private ArrayList<Auction> mDataset;
+    AppPreference appPreference;
     //private static MyClickListener myClickListener;
     private Context mContext;
     static String imageUrls;
@@ -51,6 +58,8 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_auction, parent, false);
 
+        appPreference = Esperandro.getPreferences(AppPreference.class, mContext);
+
 
         return new DataObjectHolder(view);
     }
@@ -63,7 +72,9 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         try {
 
             ((DataObjectHolder) holder).title.setText(mDataset.get(holder.getAdapterPosition()).getTitle());
-            ((DataObjectHolder) holder).highestBid.setText("Rp. "+String.valueOf(mDataset.get(holder.getAdapterPosition()).getCurrentPrice()));
+            Locale localeID = new Locale("in", "ID");
+            NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+            ((DataObjectHolder) holder).highestBid.setText(formatRupiah.format(mDataset.get(holder.getAdapterPosition()).getCurrentPrice()));
 
         } catch (Exception e){
             e.printStackTrace();
@@ -74,23 +85,54 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .placeholder(R.color.grey_dark)
                     .into(((DataObjectHolder) holder).cover);
 
-        CountDownTimer countDownTimer = new CountDownTimer(mDataset.get(holder.getAdapterPosition()).getTimeLeft(),10) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+        ((DataObjectHolder) holder).countdownTimerText.setTypeface(null, Typeface.BOLD);
 
-                long millis = millisUntilFinished;
-                //Convert milliseconds into hour,minute and seconds
-                String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-                ((DataObjectHolder) holder).countdownTimerText.setText(hms);
+        if ((mDataset.get(holder.getAdapterPosition()).getTimeLeft() > 0) && (mDataset.get(holder.getAdapterPosition()).getCurrentPrice() < mDataset.get(holder.getAdapterPosition()).getMaxPrice()) ){
+
+            try {
+                CountDownTimer countDownTimer = new CountDownTimer(mDataset.get(holder.getAdapterPosition()).getTimeLeft(),10) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                        long millis = millisUntilFinished;
+
+                        long seconds = millis / 1000;
+                        long minutes = seconds / 60;
+                        long hours = minutes / 60;
+                        long days = hours / 24;
+
+                        String time;
+                        if (days > 0){
+                            time = days + "Hari, " + String.format("%02d:%02d",hours % 24,minutes % 60);
+                        } else {
+                            time = String.format("%02d:%02d",hours % 24,minutes % 60);
+                        }
+
+                        ((DataObjectHolder) holder).countdownTimerText.setText(time);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                };
+
+                countDownTimer.start();
+            } catch (Exception e){
+                e.printStackTrace();
             }
 
-            @Override
-            public void onFinish() {
+        } else {
+            ((DataObjectHolder) holder).countdownTimerText.setText("SELESAI");
+        }
 
-            }
-        };
+        if (mDataset.get(holder.getAdapterPosition()).getUserId() == appPreference.id() ){
+            ((DataObjectHolder) holder).btnBid.setText("LIHAT LELANG");
+//            ((DataObjectHolder) holder).btnBid.setClickable(false);
+        } else ((DataObjectHolder) holder).btnBid.setText("BID SEKARANG");
 
-        countDownTimer.start();
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

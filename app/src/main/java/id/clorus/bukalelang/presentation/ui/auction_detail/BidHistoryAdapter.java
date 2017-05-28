@@ -8,8 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
@@ -28,11 +36,12 @@ public class BidHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private LayoutInflater inflater;
     private BidHistoryView mView;
 
+    PrettyTime prettyTime = new PrettyTime();
+
     public BidHistoryAdapter(Context context, ArrayList<BidHistory> mDataset, BidHistoryView view) {
         this.mContext = context;
         this.mDataset = mDataset;
         this.mView = view;
-
     }
 
 
@@ -55,19 +64,30 @@ public class BidHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         try {
 
             ((DataObjectHolder) holder).username.setText(mDataset.get(holder.getAdapterPosition()).getNameOfBidder());
-            ((DataObjectHolder) holder).nominalBid.setText(String.valueOf(mDataset.get(holder.getAdapterPosition()).getBidNominal()));
-
+            Locale localeID = new Locale("in", "ID");
+            NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+            ((DataObjectHolder) holder).nominalBid.setText(formatRupiah.format(mDataset.get(holder.getAdapterPosition()).getBidNominal()));
+/*
+            DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+            String dateString = mDataset.get(holder.getAdapterPosition()).getBiddingTime();
+            Date result1 = df1.parse(dateString);
+            ((DataObjectHolder) holder).time.setText(prettyTime.format(result1));*/
 
         } catch (Exception e){
             e.printStackTrace();
         }
 
-        /*
+        try {
             Picasso.with(mContext)
-                    .load(mDataset.get(position).getImages())
-                    .error(R.color.grey_dark)
-                    .placeholder(R.color.grey_dark)
-                    .into(((DataObjectHolder) holder).cover);      */
+                    .load(mDataset.get(holder.getAdapterPosition()).getAvatarUrl())
+                    .error(R.drawable.avatar_default)
+                    .placeholder(R.drawable.avatar_default)
+                    .into(((DataObjectHolder) holder).avatar);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
     }
 
@@ -106,10 +126,11 @@ public class BidHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView title;
         TextView username;
         TextView nominalBid;
+        TextView time;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-//            this.title = (TextView) itemView.findViewById(R.id.auction_title);
+            this.time = (TextView) itemView.findViewById(R.id.bid_time);
             this.avatar = (RoundedImageView) itemView.findViewById(R.id.avatar);
             this.nominalBid = (TextView) itemView.findViewById(R.id.bid_nominal);
             this.username = (TextView) itemView.findViewById(R.id.username);

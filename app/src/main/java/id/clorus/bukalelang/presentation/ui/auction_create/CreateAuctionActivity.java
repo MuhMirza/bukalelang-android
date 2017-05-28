@@ -30,7 +30,9 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +51,7 @@ import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryActivi
 import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryFragment;
 import id.clorus.bukalelang.presentation.utils.ImageCaptureUtil;
 import id.clorus.bukalelang.presentation.utils.ImageCompressorUtil;
+import id.clorus.bukalelang.presentation.utils.StringUtil;
 
 import static android.R.attr.category;
 
@@ -61,8 +64,8 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     @BindView(R.id.rg_product_condition)
     RadioGroup productCondition;
 
-    @BindView(R.id.date_time_picker)
-    TextView dateTimePicker;
+    @BindView(R.id.date_time_view)
+    TextView dateTimeView;
 
 
     @BindView(R.id.input_title)
@@ -84,8 +87,8 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     EditText inputKelipatanBid;
 
 
-    @BindView(R.id.btn_select_category)
-    TextView selectCategory;
+    @BindView(R.id.category_name)
+    TextView tvCategoryName;
 
 
     @BindView(R.id.recyclerView)
@@ -135,11 +138,13 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
                 isNew = "false";
                 break;
         }
+
     }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        date = year+"-"+(++monthOfYear)+"-"+dayOfMonth;
+        date = dayOfMonth+"/"+(monthOfYear+1)+"/"+year ;
+
         pickTime();
     }
 
@@ -148,11 +153,13 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
         String minuteString = minute < 10 ? "0"+minute : ""+minute;
         String secondString = second < 10 ? "0"+second : ""+second;
-        time = "T"+hourString+":"+minuteString+":"+secondString+"+07:00";
-
-        dateTimePicker.setText(date+time);
-        dateTime = date+time;
+        time = hourString+":"+minuteString;
+        dateTimeView.setText(date+time);
+        StringBuilder str = new StringBuilder();
+        str.append(date).append(time);
+        dateTime = str.toString();
     }
+
 
     @OnClick(R.id.date_time_picker)
     public void pickDate(){
@@ -164,6 +171,8 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
+
+        dpd.setMinDate(now);
         dpd.vibrate(true);
         dpd.setVersion(DatePickerDialog.Version.VERSION_2);
         dpd.show(getFragmentManager(),"");
@@ -176,6 +185,7 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
                 now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE),true
         );
+//        tpd.setMinTime(now.getTimeInMillis());
         tpd.vibrate(true);
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
         tpd.show(getFragmentManager(),"");
@@ -205,24 +215,47 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     @OnClick(R.id.btn_publish)
     public void publish(){
 
-        /*
-        Log.d("title",inputTitle.getText().toString());
-        Log.d("photos", arrayPhotos);
-        Log.d("description",inputDescription.getText().toString());
-        Log.d("kondisi isNew? ",isNew);
-        Log.d("berat",inputWeight.getText().toString());
-        Log.d("price open bid",inputPriceOpenBid.getText().toString());
-        Log.d("price bin",inputPriceBin.getText().toString());
-        Log.d("tanggal selesai",dateTime);*/
+        if ((StringUtil.isNullOrEmpty(inputTitle.getText().toString())) || (StringUtil.isNullOrEmpty(inputDescription.getText().toString())) || (StringUtil.isNullOrEmpty(inputWeight.getText().toString()))
+                || (StringUtil.isNullOrEmpty(inputPriceOpenBid.getText().toString())) || (StringUtil.isNullOrEmpty(inputPriceBin.getText().toString())) || (StringUtil.isNullOrEmpty(inputKelipatanBid.getText().toString())) )
+        {
+            showToast("Tolong isi form dengan lengkap!");
+            return;
+        }
 
-        if (inputDescription.getText().toString().length() > 30){
+        if (inputDescription.getText().toString().length() < 30){
+            showToast("Tolong berikan deskripsi lebih dari 30 kata");
+            return;
+        }
+
+        if ((Integer.parseInt(inputKelipatanBid.getText().toString()) % 1000) != 0  ){
+            showToast("Pastikan Kelipatan Bid Rp.1000 ");
+            return;
+        }
+
+        if (categorySelected.getId() == 0){
+            showToast("Tolong pilih kategori terlebih dahulu");
+            return;
+        }
+
+        if (StringUtil.isNullOrEmpty(arrayPhotos)){
+            showToast("Tolong upload photo barang terlebih dahulu");
+            return;
+        }
+
+        if (StringUtil.isNullOrEmpty(dateTime)){
+            showToast("Tolong masukan batas akhir lelang");
+            return;
+        }
+
+        try {
 
             presenter.createAuctionRequest(inputTitle.getText().toString().toUpperCase(),categorySelected.getId(),isNew,Integer.parseInt(inputWeight.getText().toString()),
                     inputDescription.getText().toString(),Integer.parseInt(inputPriceOpenBid.getText().toString()),Integer.parseInt(inputPriceBin.getText().toString()),Integer.parseInt(inputKelipatanBid.getText().toString()),arrayPhotos,dateTime);
 
-        } else showToast("Tolong berikan deskripsi lebih dari 30 kata");
 
-//        presenter.createAuctionRequest();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }
@@ -286,19 +319,23 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
             if (requestCode == AppConfig.SELECT_PHOTO_GALLERY_REQUEST_CODE){
                 pictureLocation = getRealPathFromURI(data.getData());
 
+                ImageCompressorUtil compressorUtil = new ImageCompressorUtil(this,pictureLocation);
+                compressorUtil.setCallback(new ImageCompressorUtil.Callback() {
+                    @Override
+                    public void onFinishCompress(Uri imageUri) {
+                        String path = getRealPathFromURI(imageUri);
+                        Log.d("path photo",path);
+                        presenter.uploadPhoto(path);
+                    }
+                });
+
             } else {
                 bitmap = ImageCaptureUtil.getBitmapFromResultData(this, requestCode, data);
                 pictureLocation = ImageCaptureUtil.saveImageToInternalStorage(bitmap, AppConfig.PROFILE_PICTURE_NAME, this);
+                presenter.uploadPhoto(pictureLocation);
             }
 
-            ImageCompressorUtil compressorUtil = new ImageCompressorUtil(this,pictureLocation);
-            compressorUtil.setCallback(new ImageCompressorUtil.Callback() {
-                @Override
-                public void onFinishCompress(Uri imageUri) {
-                    String path = getRealPathFromURI(imageUri);
-                    presenter.uploadPhoto(path);
-                }
-            });
+
 
         }
 
@@ -313,7 +350,7 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
                 categorySelected.setName(categoryName);
                 categorySelected.setId(categoryId);
                 categorySelected.setUrl(categoryUrl);
-                selectCategory.setText(categorySelected.getName()+ String.valueOf(categorySelected.getId()));
+                tvCategoryName.setText(categorySelected.getName());
 
             } catch (Exception e){
                 e.printStackTrace();
@@ -357,7 +394,6 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         }
 
         arrayPhotos = str.toString();
-//        arrayPhotos = arrayPhotos.substring(0,arrayPhotos.length()-1);
         Log.d("photos",str.toString());
 
     }
@@ -374,38 +410,13 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
         startActivity(intent);
         finish();
 
-        /*
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", data.getId());
-        bundle.putInt("userId",data.getUserId());
-        bundle.putInt("bin",data.getMaxPrice());
-        bundle.putInt("startPrice",data.getMinPrice());
-//        bundle.putInt("currentBid",data.getCurrentPrice());
-        bundle.putInt("kelipatanBid",data.getKelipatanBid());
-        bundle.putInt("weight",data.getWeight());
-//        bundle.putString("name", data.getName());
-        bundle.putString("title",data.getTitle());
-        bundle.putString("description",data.getDescription());
-//        bundle.putString("categoryName",data.getCategoryName());
-        bundle.putString("location",data.getLocation());
-        bundle.putString("productId",data.getProductId());
-        bundle.putString("startDate",data.getStartDate());
-        bundle.putString("endDate",data.getEndDate());
-        bundle.putString("slug",data.getSlug());
-//        bundle.putInt("timeleft",data.getTimeLeft());
-
-
-        String images = data.getImages().toString();
-        images = images.substring(1,images.length()-1);
-
-        bundle.putString("images",images);
-        Log.d("images",images);
-
-        Intent intent = new Intent(CreateAuctionActivity.this, AuctionDetailActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);*/
 
     }
 
+    @OnClick(R.id.btn_back)
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
 }
