@@ -2,16 +2,13 @@ package id.clorus.bukalelang.presentation.ui.select_category;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.flipboard.bottomsheet.commons.BottomSheetFragment;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,12 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.auctions.Auction;
-import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
 import id.clorus.bukalelang.data.entity.response.categories.Category;
-import id.clorus.bukalelang.presentation.ui.auction_create.CreateAuctionActivity;
-import id.clorus.bukalelang.presentation.ui.auction_detail.BidHistoryAdapter;
-import id.clorus.bukalelang.presentation.ui.auction_detail.BidHistoryPresenter;
 import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 

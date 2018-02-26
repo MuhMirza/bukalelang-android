@@ -5,8 +5,6 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import id.clorus.bukalelang.data.entity.response.auctions.Auction;
-
 public class JoinedAuctionData {
 
     @SerializedName("success")
@@ -23,7 +21,7 @@ public class JoinedAuctionData {
     private UserDetail userDetail;
     @SerializedName("auctionsJoined")
     @Expose
-    private List<Auction> auctionsJoined = null;
+    private List<AuctionsJoined> auctionsJoined = null;
 
     public boolean isSuccess() {
         return success;
@@ -57,11 +55,11 @@ public class JoinedAuctionData {
         this.userDetail = userDetail;
     }
 
-    public List<Auction> getAuctionsJoined() {
+    public List<AuctionsJoined> getAuctionsJoined() {
         return auctionsJoined;
     }
 
-    public void setAuctionsJoined(List<Auction> auctionsJoined) {
+    public void setAuctionsJoined(List<AuctionsJoined> auctionsJoined) {
         this.auctionsJoined = auctionsJoined;
     }
 

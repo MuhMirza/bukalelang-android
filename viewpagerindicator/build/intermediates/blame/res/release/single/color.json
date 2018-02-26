@@ -1,35 +1,31 @@
 [
     {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_primary_text_disable_only_material_light.xml"
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_spinner.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_spinner.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_btn_checkable.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_btn_checkable.xml"
     },
     {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_primary_text_material_dark.xml"
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/switch_thumb_material_dark.xml"
-    },
-    {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_secondary_text_material_light.xml"
-    },
-    {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_seek_thumb.xml"
-    },
-    {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_search_url_text.xml"
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_edittext.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_edittext.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_switch_thumb.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/switch_thumb_material_dark.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
@@ -52,27 +48,107 @@
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_edittext.xml"
     },
     {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/switch_thumb_material_light.xml"
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/switch_thumb_material_light.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/vpi__light_theme.xml",
         "source": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/src/main/res/color/vpi__light_theme.xml"
     },
     {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_spinner.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_spinner.xml"
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_seek_thumb.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_secondary_text_material_dark.xml"
     },
     {
-        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
-        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_primary_text_material_light.xml"
-    },
-    {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_default.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_switch_thumb.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/vpi__light_theme.xml",
+        "source": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/src/main/res/color/vpi__light_theme.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_btn_checkable.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_switch_track.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_default.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/vpi__dark_theme.xml",
+        "source": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/src/main/res/color/vpi__dark_theme.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_tint_spinner.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color/abc_primary_text_material_light.xml"
     }
 ]

@@ -1,7 +1,6 @@
 package id.clorus.bukalelang.presentation.ui.home;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;

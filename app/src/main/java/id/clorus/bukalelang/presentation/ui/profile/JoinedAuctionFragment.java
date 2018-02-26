@@ -2,7 +2,6 @@ package id.clorus.bukalelang.presentation.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,14 +15,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.auctions.Auction;
-import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
+import id.clorus.bukalelang.data.entity.response.joined_auction.AuctionsJoined;
 import id.clorus.bukalelang.data.entity.response.joined_auction.JoinedAuctionData;
 import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
-import id.clorus.bukalelang.presentation.ui.auction_detail.BidHistoryPresenter;
-import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;;
-import id.clorus.bukalelang.presentation.ui.home.HomeView;
+import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
+
+;
 
 /**
  * Created by mirza on 28/05/17.
@@ -34,7 +32,7 @@ public class JoinedAuctionFragment extends DefaultFragment implements JoinedAuct
     AppPreference appPreference;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    ArrayList<Auction> auctions;
+    ArrayList<AuctionsJoined> auctions;
     private AuctionListAdapter adapter;
     private LinearLayoutManager layoutManager;
 
@@ -49,6 +47,7 @@ public class JoinedAuctionFragment extends DefaultFragment implements JoinedAuct
         presenter = new JoinedAuctionPresenter(this,getActivity());
 
         Bundle bundle = getActivity().getIntent().getExtras();
+//        Bundle bundle = getArguments();
         String userId = bundle.getString("userId");
 
         auctions = new ArrayList<>();
@@ -80,22 +79,28 @@ public class JoinedAuctionFragment extends DefaultFragment implements JoinedAuct
             adapter.addItem(data.getAuctionsJoined().get(i),auctions.size());
         }
 
-        ((ProfileActivity) getActivity()).initToolbar(data.getUserDetail().getAvatarUrl(),data.getUserDetail().getName());
+        try {
+            ((ProfileActivity) getActivity()).initToolbar(data.getUserDetail().getAvatarUrl(),data.getUserDetail().getName());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
 
     }
     @Override
-    public void onItemSelected(Auction data) {
+    public void onItemSelected(AuctionsJoined data) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt("id", data.getId());
+        bundle.putInt("id", data.getAuctionId());
         bundle.putInt("userId",data.getUserId());
         bundle.putInt("bin",data.getMaxPrice());
         bundle.putInt("startPrice",data.getMinPrice());
-        bundle.putInt("currentBid",data.getCurrentPrice());
+        bundle.putInt("currentBid",data.getCurrentBid());
         bundle.putInt("kelipatanBid",data.getKelipatanBid());
         bundle.putInt("weight",data.getWeight());
-        bundle.putString("name", data.getName());
+//        bundle.putString("name", data.getName());
         bundle.putString("title",data.getTitle());
         bundle.putString("description",data.getDescription());
         bundle.putString("categoryName",data.getCategoryName());
@@ -105,8 +110,8 @@ public class JoinedAuctionFragment extends DefaultFragment implements JoinedAuct
         bundle.putString("endDate",data.getEndDate());
         bundle.putString("slug",data.getSlug());
         bundle.putInt("timeleft",data.getTimeLeft());
-        bundle.putInt("bidderCount",data.getBidderCount());
-        bundle.putString("avatarUrl",data.getAvatarUrl());
+//        bundle.putInt("bidderCount",data.getBidderCount());
+//        bundle.putString("avatarUrl",data.getAvatarUrl());
 
         String images = data.getImages().toString();
         images = images.substring(1,images.length()-1);

@@ -1,19 +1,12 @@
 package id.clorus.bukalelang.presentation.ui.search_auction;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -26,9 +19,6 @@ import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
 import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
-import id.clorus.bukalelang.presentation.ui.home.AuctionListAdapter;
-import id.clorus.bukalelang.presentation.ui.home.HomeActivity;
-import id.clorus.bukalelang.presentation.ui.home.HomePresenter;
 import id.clorus.bukalelang.presentation.ui.home.HomeView;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 
@@ -43,7 +33,7 @@ public class SearchAuctionActivity extends DefaultActivity implements HomeView {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     ArrayList<Auction> auctions;
-    private AuctionListAdapter adapter;
+    private SearchAuctionListAdapter adapter;
     private LinearLayoutManager layoutManager;
 
     @BindView(R.id.searchView)
@@ -88,7 +78,7 @@ public class SearchAuctionActivity extends DefaultActivity implements HomeView {
         recyclerView.setItemViewCacheSize(10);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        adapter = new AuctionListAdapter(this, auctions,this);
+        adapter = new SearchAuctionListAdapter(this, auctions,this);
 
         recyclerView.setAdapter(adapter);
 

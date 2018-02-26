@@ -1,7 +1,6 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -19,7 +18,6 @@ import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -32,8 +30,6 @@ import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;
-import id.clorus.bukalelang.presentation.ui.home.HomeActivity;
-import id.clorus.bukalelang.presentation.ui.profile.ProfileActivity;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 import id.clorus.bukalelang.presentation.utils.TextViewExpandableAnimation;
 
@@ -164,11 +160,12 @@ public class ProductDetailFragment extends DefaultFragment implements ViewPager.
 
     @OnClick(R.id.profile_layout)
     public void goProfile(){
+        /*
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userId",String.valueOf(auction.getUserId()));
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

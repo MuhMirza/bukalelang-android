@@ -1,6 +1,9 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
+import android.util.Log;
+
 import id.clorus.bukalelang.data.entity.response.TimeLeftData;
+import id.clorus.bukalelang.data.entity.response.WinStatusData;
 import id.clorus.bukalelang.data.net.RestService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,5 +33,22 @@ public class AuctionDetailPresenter {
 
             }
         });
+    }
+
+    public void getWinStatus(String auctionId,String userId){
+
+        RestService.Factory.getInstance().getWinStatus("auctions/"+auctionId+"/checkout-status/"+userId).enqueue(new Callback<WinStatusData>() {
+            @Override
+            public void onResponse(Call<WinStatusData> call, Response<WinStatusData> response) {
+                Log.d("win",String.valueOf(response.body().getIsWin()));
+                view.onWinStatusLoaded(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<WinStatusData> call, Throwable t) {
+
+            }
+        });
+
     }
 }

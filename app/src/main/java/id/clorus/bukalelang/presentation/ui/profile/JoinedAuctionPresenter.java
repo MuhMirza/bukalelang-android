@@ -3,10 +3,8 @@ package id.clorus.bukalelang.presentation.ui.profile;
 import android.content.Context;
 import android.util.Log;
 
-import id.clorus.bukalelang.data.entity.response.auctions.AuctionData;
 import id.clorus.bukalelang.data.entity.response.joined_auction.JoinedAuctionData;
 import id.clorus.bukalelang.data.net.RestService;
-import id.clorus.bukalelang.presentation.ui.home.HomeView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -4,6 +4,14 @@
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
     },
     {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
     }

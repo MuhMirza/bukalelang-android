@@ -1,7 +1,9 @@
 package id.clorus.bukalelang.presentation.ui.auth;
 
 import android.content.Context;
+import android.util.Log;
 
+import id.clorus.bukalelang.data.entity.response.StoreFCMTokenResultData;
 import id.clorus.bukalelang.data.entity.response.auth.AuthData;
 import id.clorus.bukalelang.data.net.RestService;
 import retrofit2.Call;
@@ -52,6 +54,25 @@ public class AuthPresenter {
             }
         });
 
+    }
+
+    public void storeFcmToken(int bukalapakId,String token){
+        RestService.Factory.getInstance().storeFCMToken(bukalapakId,token).enqueue(new Callback<StoreFCMTokenResultData>() {
+            @Override
+            public void onResponse(Call<StoreFCMTokenResultData> call, Response<StoreFCMTokenResultData> response) {
+                try {
+                    Log.d("result",response.body().getMessage());
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreFCMTokenResultData> call, Throwable t) {
+
+            }
+        });
     }
 
 

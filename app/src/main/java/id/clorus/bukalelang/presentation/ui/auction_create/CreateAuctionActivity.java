@@ -16,23 +16,18 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.karthyks.runtimepermissions.Permission;
 import com.github.karthyks.runtimepermissions.PermissionActivity;
-import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,17 +38,12 @@ import id.clorus.bukalelang.data.entity.response.UploadImageData;
 import id.clorus.bukalelang.data.entity.response.categories.Category;
 import id.clorus.bukalelang.presentation.config.AppConfig;
 import id.clorus.bukalelang.presentation.model.AuctionPhoto;
-import id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
 import id.clorus.bukalelang.presentation.ui.home.HomeActivity;
-import id.clorus.bukalelang.presentation.ui.select_category.CategoryListAdapter;
 import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryActivity;
-import id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryFragment;
 import id.clorus.bukalelang.presentation.utils.ImageCaptureUtil;
 import id.clorus.bukalelang.presentation.utils.ImageCompressorUtil;
 import id.clorus.bukalelang.presentation.utils.StringUtil;
-
-import static android.R.attr.category;
 
 /**
  * Created by mirza on 24/05/17.
@@ -66,7 +56,6 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
 
     @BindView(R.id.date_time_view)
     TextView dateTimeView;
-
 
     @BindView(R.id.input_title)
     TextView inputTitle;
@@ -161,7 +150,7 @@ public class CreateAuctionActivity extends DefaultActivity implements TimePicker
     }
 
 
-    @OnClick(R.id.date_time_picker)
+    @OnClick(R.id.btn_set_date)
     public void pickDate(){
 
         Calendar now = Calendar.getInstance();

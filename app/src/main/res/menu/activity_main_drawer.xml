@@ -6,8 +6,16 @@
             android:id="@+id/nav_bikin_lelang"
             android:title="Bikin Lelang" />
         <item
-            android:id="@+id/nav_profile"
-            android:title="Profil"
+            android:id="@+id/nav_lelang_ku"
+            android:title="Lelanganku" />
+
+        <item
+            android:id="@+id/nav_joined_auction"
+            android:title="Lelang Diikuti"
+            />
+        <item
+            android:id="@+id/nav_won_auction"
+            android:title="Menang Lelang"
             />
     </group>
 

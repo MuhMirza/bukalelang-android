@@ -7,18 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.bids.BidHistory;
 import id.clorus.bukalelang.presentation.model.AuctionPhoto;
-import id.clorus.bukalelang.presentation.ui.auction_detail.BidHistoryView;
 
 
 /**

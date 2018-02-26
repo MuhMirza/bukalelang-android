@@ -6,17 +6,19 @@ buildscript {
     }
     dependencies {
         // the latest version of the android-apt plugin from https://bitbucket.org/hvisser/android-apt
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         // the latest version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath "io.realm:realm-gradle-plugin:2.1.1"
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 apply plugin: 'com.neenbedankt.android-apt'
+
 
 repositories {
     mavenCentral();
@@ -29,8 +31,20 @@ repositories {
     }
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('/home/mirza/clorusKey.jks')
+            keyAlias 'ClorusAndroidKey'
+            keyPassword 'mozaex123'
+            storePassword 'clorus2017'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
@@ -73,12 +87,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile('io.socket:socket.io-client:0.8.3') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
@@ -87,10 +106,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile ('io.socket:socket.io-client:0.8.3') {
-        // excluding org.json which is provided by Android
-        exclude group: 'org.json', module: 'json'
-    }
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.android.support:multidex:1.0.1'
@@ -101,10 +116,14 @@ dependencies {
     compile 'com.flipboard:bottomsheet-commons:1.5.3'
     compile 'io.github.kobakei:ratethisapp:1.1.3'
     compile 'com.iceteck.silicompressorr:silicompressor:1.1.0'
+    compile 'com.wdullaer:materialdatetimepicker:3.2.1'
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+    compile 'com.google.android.gms:play-services-maps:10.2.6'
+    compile 'com.google.firebase:firebase-core:10.2.6'
+    compile 'com.google.firebase:firebase-messaging:10.2.6'
     testCompile 'junit:junit:4.12'
     apt 'de.devland.esperandro:esperandro:2.2.0'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    compile 'com.wdullaer:materialdatetimepicker:3.2.1'
-    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-
 }
+
+apply plugin: 'com.google.gms.google-services'

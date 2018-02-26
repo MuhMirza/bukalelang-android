@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/mirza/Downloads/BukaLelang/viewpagerindicator/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/home/mirza/Downloads/BukaLelang/viewpagerindicator/src/debug/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/src/debug/shaders"/></dataSet></merger>

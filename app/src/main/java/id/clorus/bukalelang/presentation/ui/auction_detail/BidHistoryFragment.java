@@ -1,7 +1,6 @@
 package id.clorus.bukalelang.presentation.ui.auction_detail;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -28,17 +26,10 @@ import id.clorus.bukalelang.data.entity.response.bids.BidHistoryData;
 import id.clorus.bukalelang.presentation.ui.Bukalelang;
 import id.clorus.bukalelang.presentation.ui.base.DefaultFragment;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
-import io.socket.client.IO;
 import io.socket.client.Manager;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import io.socket.engineio.client.Transport;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okio.ByteString;
 
 /**
  * Created by mirza on 23/05/17.
@@ -51,11 +42,11 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    @BindView(R.id.container)
-    LinearLayout container;
-
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
+
+    @BindView(R.id.no_bid_status)
+    ImageView noBidStatus;
 
     private BidHistoryAdapter adapter;
     private LinearLayoutManager layoutManager;
@@ -65,9 +56,7 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
 
     Auction auction;
 
-
     Socket socket;
-
 
 
     @Override
@@ -96,6 +85,7 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
         auction.setStartDate(bundle.getString("startDate"));
         auction.setEndDate(bundle.getString("endDate"));
         auction.setSlug(bundle.getString("slug"));
+        auction.setAvatarUrl(bundle.getString("avatarUrl"));
 
         bidHistories = new ArrayList<>();
         initRecyclerView();
@@ -204,14 +194,38 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
                     newBid.setNameOfBidder(obj.getString("name"));
                     newBid.setBidNominal(obj.getInt("current_price"));
                     newBid.setBiddingTime(obj.getString("bidding_time"));
+                    newBid.setAvatarUrl(obj.getString("avatarUrl"));
 
                     showToast("Ada bid baru!");
 
-                    ((AuctionDetailActivity) getActivity()).setCurrentBid(newBid.getBidNominal());
+                    try {
+                        ((AuctionDetailActivity) getActivity()).setCurrentBid(newBid.getBidNominal());
+                        ((AuctionDetailActivity) getActivity()).cekStatusAuction();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        ((AuctionDetailFromNotifActivity) getActivity()).setCurrentBid(newBid.getBidNominal());
+                        ((AuctionDetailFromNotifActivity) getActivity()).cekStatusAuction();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
                     adapter.addItem(newBid,0);
-//                    layoutManager.scrollToPosition(0);
-//                    layoutManager.smoothScrollToPosition(recyclerView, null, 0);
+
+                    try {
+                        if (bidHistories.size() > 6){
+                            layoutManager.scrollToPosition(0);
+                            layoutManager.smoothScrollToPosition(recyclerView, null, 0);
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -223,8 +237,6 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 
@@ -240,12 +252,15 @@ public class BidHistoryFragment extends DefaultFragment implements BidHistoryVie
 
     }
 
-
     @Override
     public void onBidHistoryLoaded(BidHistoryData data) {
-        for (int i = 0;i<data.getBidHistory().size();i++){
-            adapter.addItem(data.getBidHistory().get(i),bidHistories.size());
+        if (data.getBidHistory().size() > 0) {
+            for (int i = 0;i<data.getBidHistory().size();i++){
+                adapter.addItem(data.getBidHistory().get(i),bidHistories.size());
+            }
+            noBidStatus.setVisibility(View.GONE);
         }
         swipeRefresh.setRefreshing(false);
+
     }
 }

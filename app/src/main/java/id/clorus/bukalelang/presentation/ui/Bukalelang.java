@@ -1,7 +1,6 @@
 package id.clorus.bukalelang.presentation.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -25,7 +24,7 @@ public class Bukalelang extends MultiDexApplication {
     private Socket socket;
     {
         try {
-            socket = IO.socket("http://studio.tealinuxos.org:3000/");
+            socket = IO.socket("http://pinguin.dinus.ac.id:3000/");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

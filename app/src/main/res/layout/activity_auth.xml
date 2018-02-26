@@ -63,9 +63,52 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/btn_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="MASUK"
+                    android:background="@color/colorPrimary"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="3dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/love"
+                android:layout_margin="10dp"
+                android:tint="@color/black"
+                android:layout_gravity="center_vertical"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo_bukalapak"/>
+
+
+
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/input_name"
@@ -74,7 +117,8 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <EditText
             android:id="@+id/input_email"
@@ -82,7 +126,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary" />
 
         <EditText
             android:id="@+id/input_username"
@@ -90,6 +135,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_height="wrap_content" />
 
         <com.xwray.passwordview.PasswordView
@@ -97,8 +143,11 @@
             android:hint="Password"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
 
     </LinearLayout>
 
@@ -118,9 +167,20 @@
             android:textColor="@color/white"/>
 
         <TextView
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:text="sekaligus mendaftar Bukalapak"
+            android:gravity="center_horizontal"/>
+
+        <TextView
             android:id="@+id/auth_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:paddingBottom="10dp"
             android:paddingTop="5dp"
             android:text="Sudah punya akun? login"

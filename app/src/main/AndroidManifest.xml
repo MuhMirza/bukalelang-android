@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
-        android:name=".presentation.ui.Bukalelang"
+        android:name="id.clorus.bukalelang.presentation.ui.Bukalelang"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,39 +23,61 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".presentation.ui.splash.SplashScreenActivity"
+            android:name="id.clorus.bukalelang.presentation.ui.splash.SplashScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.ui.home.HomeActivity"
+        <activity android:name="id.clorus.bukalelang.presentation.ui.home.HomeActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".presentation.ui.profile.ProfileActivity"
+        <activity android:name=".presentation.ui.auction_create_from_lapak.SelectProductActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".presentation.ui.search_auction.SearchAuctionActivity"
+        <activity android:name=".presentation.ui.auction_create_from_lapak.CreateAuctionFromLapakActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.ui.checkout.CheckoutActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.ui.auction_detail.AuctionDetailFromNotifActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="id.clorus.bukalelang.presentation.service.MyAndroidFirebaseMsgService" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name="id.clorus.bukalelang.presentation.ui.profile.ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.ui.profile.JoinedAuctionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.ui.won_auction.WonAuctionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="id.clorus.bukalelang.presentation.ui.search_auction.SearchAuctionActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".presentation.ui.select_category.SelectCategoryActivity"
+        <activity android:name="id.clorus.bukalelang.presentation.ui.select_category.SelectCategoryActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".presentation.ui.auth.AuthActivity"
+        <activity android:name="id.clorus.bukalelang.presentation.ui.auth.AuthActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.ui.my_auctions.MyAuctionActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.ui.auction_detail.AuctionDetailActivity"
+            android:name="id.clorus.bukalelang.presentation.ui.auction_detail.AuctionDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data android:scheme="http"
@@ -67,11 +89,39 @@
                     android:pathPrefix="/lelang"
                     android:host="web.bukalelang.id" />
             </intent-filter>
-
         </activity>
 
-        <activity android:name=".presentation.ui.auction_create.CreateAuctionActivity"
+        <activity android:name="id.clorus.bukalelang.presentation.ui.auction_create.CreateAuctionActivity"
             android:screenOrientation="portrait"/>
+        <service
+            android:name="id.clorus.bukalelang.presentation.service.MyAndroidFirebaseMsgService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="id.clorus.bukalelang.presentation.service.MyAndroidFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
     </application>
+
+
 
 </manifest>

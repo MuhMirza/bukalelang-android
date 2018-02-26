@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_edittext.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
     },
@@ -12,8 +16,32 @@
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color-v23/abc_color_highlight_material.xml"
     },
     {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_track.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_spinner.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_default.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_default.xml"
+    },
+    {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_thumb.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color-v23/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_switch_thumb.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_spinner.xml",
@@ -26,6 +54,14 @@
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_btn_checkable.xml",
         "source": "/home/mirza/.android/build-cache/5a6873a4d57f0f03ee008bf9479c1efaae4f08eb/output/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/macbookpro/Workspace/Android/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_color_highlight_material.xml",
+        "source": "/Users/macbookpro/.android/build-cache/b395e6707b37f4f33aff4f8ca888053b4b8204de/output/res/color-v23/abc_color_highlight_material.xml"
     },
     {
         "merged": "/home/mirza/Downloads/BukaLelang/viewpagerindicator/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_track.xml",

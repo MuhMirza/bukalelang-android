@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1040309819313",
+    "firebase_url": "https://bukalelang-45a85.firebaseio.com",
+    "project_id": "bukalelang-45a85",
+    "storage_bucket": "bukalelang-45a85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040309819313:android:5b3bb01ad7b17d1d",
+        "android_client_info": {
+          "package_name": "id.clorus.bukalelang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040309819313-6cs7fdjm7ni5urr1q5s4i76hrdbb4d17.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.clorus.bukalelang",
+            "certificate_hash": "58cf8f6d1e6f7d0a1757a68a652f171f7bd616ba"
+          }
+        },
+        {
+          "client_id": "1040309819313-gsv6ot92c54kqkeb074qivl01jdiq989.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiCDbeNJ034sPR7Y7J-DoduaUqho0h3AM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040309819313-gsv6ot92c54kqkeb074qivl01jdiq989.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

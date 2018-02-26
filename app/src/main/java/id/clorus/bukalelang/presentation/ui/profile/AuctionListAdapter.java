@@ -20,8 +20,7 @@ import java.util.Locale;
 
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.auctions.Auction;
-import id.clorus.bukalelang.presentation.ui.home.HomeView;
+import id.clorus.bukalelang.data.entity.response.joined_auction.AuctionsJoined;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 
 
@@ -30,7 +29,7 @@ import id.clorus.bukalelang.presentation.utils.AppPreference;
  */
 public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static String LOG_TAG = "ProductListAdapter";
-    private ArrayList<Auction> mDataset;
+    private ArrayList<AuctionsJoined> mDataset;
     AppPreference appPreference;
     //private static MyClickListener myClickListener;
     private Context mContext;
@@ -39,14 +38,14 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private LayoutInflater inflater;
     private JoinedAuctionView mView;
 
-    public AuctionListAdapter(Context context, ArrayList<Auction> mDataset, JoinedAuctionView view) {
+    public AuctionListAdapter(Context context, ArrayList<AuctionsJoined> mDataset, JoinedAuctionView view) {
         this.mContext = context;
         this.mDataset = mDataset;
         this.mView = view;
     }
 
 
-    public AuctionListAdapter(ArrayList<Auction> myDataset) {
+    public AuctionListAdapter(ArrayList<AuctionsJoined> myDataset) {
         mDataset = myDataset;
     }
 
@@ -72,7 +71,7 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((DataObjectHolder) holder).title.setText(mDataset.get(holder.getAdapterPosition()).getTitle());
             Locale localeID = new Locale("in", "ID");
             NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
-            ((DataObjectHolder) holder).highestBid.setText(formatRupiah.format(mDataset.get(holder.getAdapterPosition()).getCurrentPrice()));
+            ((DataObjectHolder) holder).highestBid.setText(formatRupiah.format(mDataset.get(holder.getAdapterPosition()).getCurrentBid()));
 
         } catch (Exception e){
             e.printStackTrace();
@@ -85,7 +84,7 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         ((DataObjectHolder) holder).countdownTimerText.setTypeface(null, Typeface.BOLD);
 
-        if ((mDataset.get(holder.getAdapterPosition()).getTimeLeft() > 0) && (mDataset.get(holder.getAdapterPosition()).getCurrentPrice() < mDataset.get(holder.getAdapterPosition()).getMaxPrice()) ){
+        if ((mDataset.get(holder.getAdapterPosition()).getTimeLeft() > 0) && (mDataset.get(holder.getAdapterPosition()).getCurrentBid() < mDataset.get(holder.getAdapterPosition()).getMaxPrice()) ){
 
             try {
                 CountDownTimer countDownTimer = new CountDownTimer(mDataset.get(holder.getAdapterPosition()).getTimeLeft(),10) {
@@ -152,7 +151,7 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 
-    public void addItem(Auction dataObj, int index) {
+    public void addItem(AuctionsJoined dataObj, int index) {
         mDataset.add(index, dataObj);
         notifyItemInserted(index);
     }
@@ -169,7 +168,7 @@ public class AuctionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     // Add a list of items
-    public void addAll(ArrayList<Auction> list) {
+    public void addAll(ArrayList<AuctionsJoined> list) {
         mDataset.addAll(list);
         notifyDataSetChanged();
     }

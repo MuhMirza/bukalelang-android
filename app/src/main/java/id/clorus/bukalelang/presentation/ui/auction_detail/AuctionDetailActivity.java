@@ -25,14 +25,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.devland.esperandro.Esperandro;
 import id.clorus.bukalelang.R;
-import id.clorus.bukalelang.data.entity.response.AddBidStatusData;
-import id.clorus.bukalelang.data.entity.response.ItemAuctionData;
 import id.clorus.bukalelang.data.entity.response.TimeLeftData;
+import id.clorus.bukalelang.data.entity.response.WinStatusData;
 import id.clorus.bukalelang.data.entity.response.auctions.Auction;
 import id.clorus.bukalelang.data.net.RestService;
 import id.clorus.bukalelang.presentation.ui.auth.AuthActivity;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
-import id.clorus.bukalelang.presentation.ui.home.AuctionListAdapter;
+import id.clorus.bukalelang.presentation.ui.checkout.CheckoutActivity;
 import id.clorus.bukalelang.presentation.utils.AppPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -111,7 +110,10 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
                 countdownTimerText.setText("LELANG TELAH BERAKHIR");
                 countDownTimer.cancel();
                 btnOpenBidMenu.setText("LELANG INI TELAH BERAKHIR");
-                btnOpenBidMenu.setClickable(false);
+//                btnOpenBidMenu.setClickable(false);
+                presenter.getWinStatus(String.valueOf(auction.getId()),String.valueOf(appPreference.id()));
+
+
             }
 
 
@@ -127,7 +129,6 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
             }
 
         }
-
 
     }
 
@@ -165,7 +166,8 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
                         countdownTimerText.setText("LELANG TELAH BERAKHIR");
                         countDownTimer.cancel();
                         btnOpenBidMenu.setText("LELANG INI TELAH BERAKHIR");
-                        btnOpenBidMenu.setClickable(false);
+//                        btnOpenBidMenu.setClickable(false);
+                        presenter.getWinStatus(String.valueOf(auction.getId()),String.valueOf(appPreference.id()));
                     }
 
 
@@ -182,8 +184,15 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
                 }
             });
 
+    }
 
-
+    public void cekStatusAuction(){
+        if ((auction.getTimeLeft() <= 0) || (auction.getCurrentPrice() >= auction.getMaxPrice()) ){
+            countdownTimerText.setText("LELANG TELAH BERAKHIR");
+            countDownTimer.cancel();
+            btnOpenBidMenu.setText("LELANG INI TELAH BERAKHIR");
+            presenter.getWinStatus(String.valueOf(auction.getId()),String.valueOf(appPreference.id()));
+        }
     }
 
     public void setBundle(Auction data){
@@ -317,6 +326,36 @@ public class AuctionDetailActivity extends DefaultActivity implements AuctionDet
             timer(data.getTimeLeft());
             auction.setTimeLeft(data.getTimeLeft());
             countDownTimer.start();
+        }
+
+    }
+
+    @Override
+    public void onWinStatusLoaded(WinStatusData data) {
+        if (data.getIsWin() == 1){
+
+            if (data.getIsCheckedOut() == 0){
+                btnOpenBidMenu.setText("CHECK OUT");
+                btnOpenBidMenu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(AuctionDetailActivity.this, CheckoutActivity.class);
+
+                        bundle = new Bundle();
+                        bundle.putInt("id", auction.getId());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+                });
+            } else {
+                btnOpenBidMenu.setText("Sedang Diproses, Cek status di Bukalapak Apps");
+                btnOpenBidMenu.setClickable(false);
+            }
+
+        } else {
+            btnOpenBidMenu.setClickable(false);
         }
 
     }

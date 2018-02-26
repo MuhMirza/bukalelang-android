@@ -2,14 +2,10 @@ package id.clorus.bukalelang.presentation.ui.select_category;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 
-import butterknife.BindView;
-import butterknife.Unbinder;
 import id.clorus.bukalelang.R;
 import id.clorus.bukalelang.data.entity.response.categories.Category;
 import id.clorus.bukalelang.presentation.ui.base.DefaultActivity;
-import id.clorus.bukalelang.presentation.utils.AppPreference;
 
 /**
  * Created by mirza on 25/05/17.

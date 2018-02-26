@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.xwray.passwordview.PasswordView;
 
 import butterknife.BindView;
@@ -47,11 +48,18 @@ public class AuthActivity extends DefaultActivity implements AuthView{
     @BindView(R.id.auth_switch)
     TextView Tvswitch;
 
+    @BindView(R.id.btn_switch)
+    Button btnSwitch;
+
+    @BindView(R.id.note)
+    TextView note;
+
     private boolean isLogin = true;
 
     AppPreference appPreference;
 
     AuthPresenter presenter;
+    String fcmToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,14 @@ public class AuthActivity extends DefaultActivity implements AuthView{
         ButterKnife.bind(this);
 
         presenter = new AuthPresenter(this,this);
+
+        try {
+            fcmToken = FirebaseInstanceId.getInstance().getToken();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
         if (isLogin){
             loginMode();
@@ -80,7 +96,8 @@ public class AuthActivity extends DefaultActivity implements AuthView{
         inputName.setVisibility(View.GONE);
         inputEmail.setVisibility(View.GONE);
         btnSubmit.setText("LOGIN");
-
+        btnSwitch.setText("DAFTAR");
+        note.setText("masuk akun Bukalapak");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +116,8 @@ public class AuthActivity extends DefaultActivity implements AuthView{
         inputName.setVisibility(View.VISIBLE);
         inputEmail.setVisibility(View.VISIBLE);
         btnSubmit.setText("DAFTAR");
-
+        btnSwitch.setText("MASUK");
+        note.setText("sekaligus mendaftar akun Bukalapak");
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +128,7 @@ public class AuthActivity extends DefaultActivity implements AuthView{
     }
 
 
-    @OnClick(R.id.auth_switch)
+    @OnClick(R.id.btn_switch)
     public void swithAuthMode(){
 
         if (isLogin){
@@ -137,6 +155,12 @@ public class AuthActivity extends DefaultActivity implements AuthView{
             if (authData.getUserAddresses().size() >0){
                 appPreference.isHaveAddress(true);
             } else appPreference.isHaveAddress(false);
+
+            try {
+                presenter.storeFcmToken(appPreference.bukalapakId(),fcmToken);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
             Intent intent = new Intent(AuthActivity.this, HomeActivity.class);
             startActivity(intent);
@@ -165,6 +189,13 @@ public class AuthActivity extends DefaultActivity implements AuthView{
             if (authData.getUserAddresses().size() >0){
                 appPreference.isHaveAddress(true);
             } else appPreference.isHaveAddress(false);
+
+            try {
+                presenter.storeFcmToken(appPreference.bukalapakId(),fcmToken);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
 
             Intent intent = new Intent(AuthActivity.this, HomeActivity.class);
             startActivity(intent);

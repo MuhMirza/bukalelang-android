@@ -6,4 +6,9 @@
         <item>Select from Gallery</item>
     </string-array>
 
+    <string-array name="auction_create">
+        <item>Bikin lelang baru</item>
+        <item>Ambil dari lapak</item>
+    </string-array>
+
 </resources>

@@ -1,9 +1,10 @@
 
 package id.clorus.bukalelang.data.entity.response.auctions;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class AuctionData {
 
